@@ -1,1 +1,7 @@
 .vs
+dependencies
+Build
+.vscode/
+.vcsproj
+.vcsproj.filters
+.vcsproj.user
