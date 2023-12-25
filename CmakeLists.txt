@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(guitest)
 
+include_directories(GalGui/include)
+
 add_executable()
