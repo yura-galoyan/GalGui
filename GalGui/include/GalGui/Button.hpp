@@ -16,6 +16,7 @@ namespace GalGui {
 namespace Widget {
 
 
+// Standart button
 class Button : public Detail::GuiElement
 {
 public:
