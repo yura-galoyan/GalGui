@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sources\test.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\Widgets\Button\Button.hpp">
+    <ClInclude Include="GalGui\include\GalGui\Button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Widgets\GuiElement\GuiElementBase.hpp">
+    <ClInclude Include="GalGui\include\GalGui\GuiElement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

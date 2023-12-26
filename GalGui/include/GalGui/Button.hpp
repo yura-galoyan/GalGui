@@ -26,7 +26,6 @@ public:
     };
 
 public:
-    Button() = default;
     Button(sf::Vector2f m_GlobalPosition = sf::Vector2f{0,0}, sf::Vector2f m_InitialSize = sf::Vector2f{100,50});
 
     // override this function to implement logic of element
@@ -41,12 +40,14 @@ public:
     void setOutlineColor(sf::Color newColor);
     void setIdleColor(sf::Color newColor);
     void setHoverColor(sf::Color newColor);
+    void setPressColor(sf::Color newColor);
     void setText(std::string content);
 
     State getState();
     sf::Color getOutlineColor();
     sf::Color getIdleColor();
     sf::Color getHoverColor();
+    sf::Color getPressColor();
     std::string getText();
 
 
@@ -54,6 +55,7 @@ private:
     std::string m_text;
     sf::Color m_idleColor{sf::Color(171,171,171)};
     sf::Color m_HoverColor{sf::Color(196,196,196)};
+    sf::Color m_PressColor{sf::Color(128,128,128)};
 
 
 private:
@@ -68,6 +70,8 @@ inline Button::Button(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize)
     : Detail::GuiElement{m_GlobalPosition, m_InitialSize}
 {
     m_rectangle.setOutlineColor(sf::Color{104,104,104 });
+    m_ButtonState = State::Idle;
+    m_rectangle.setFillColor(getIdleColor());
 }
 
 inline void Button::update(sf::RenderWindow& window, sf::Event& event)
@@ -78,15 +82,6 @@ inline void Button::update(sf::RenderWindow& window, sf::Event& event)
 inline void Button::draw(sf::RenderTarget& target)
 {
     target.draw(m_rectangle);
-
-
-    if(m_ButtonState == State::Hovered)
-    {
-        m_rectangle.setFillColor(getHoverColor());
-        target.draw(m_rectangle);
-    }
-
-
 }
 
 inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
@@ -103,18 +98,16 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
 
     if(event.type == sf::Event::MouseMoved)
     {
-        if(event.mouseButton.button == sf::Mouse::Left)
+        if(isOnButton())
         {
-            if(isOnButton())
-            {
-                m_ButtonState = State::Hovered;
-            }
-            else 
-            {
-                m_ButtonState = State::Idle;
-            }
-                     
+            m_ButtonState = State::Hovered;
         }
+        else 
+        {
+            m_ButtonState = State::Idle;
+        }
+                     
+        
     }
     if(event.type == sf::Event::MouseButtonPressed)
     {
@@ -146,6 +139,22 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
                      
         }
     }
+
+
+    if(m_ButtonState == State::Hovered)
+    {
+        m_rectangle.setFillColor(getHoverColor());
+    }
+    else if(m_ButtonState == State::Idle)
+    {
+        m_rectangle.setFillColor(getIdleColor());
+    }
+    else if(m_ButtonState == State::Pressed)
+    {
+        m_rectangle.setFillColor(getPressColor());
+    }
+
+
 }
 
 inline auto Button::getState() -> State
@@ -173,6 +182,11 @@ inline void Button::setHoverColor(sf::Color newColor)
     m_HoverColor = newColor;
 }
 
+inline void Button::setPressColor(sf::Color newColor)
+{
+    m_PressColor = newColor;
+}
+
 inline void Button::setText(std::string content)
 {
     m_text = content;
@@ -193,12 +207,15 @@ inline sf::Color Button::getHoverColor()
     return m_HoverColor;
 }
 
+inline sf::Color Button::getPressColor()
+{
+    return m_PressColor;
+}
+
 inline std::string Button::getText()
 {
     return m_text;
 }
-
-
 
 
 }

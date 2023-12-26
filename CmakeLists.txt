@@ -3,4 +3,4 @@ project(guitest)
 
 include_directories(GalGui/include)
 
-add_executable()
+add_executable(guitest test.cpp)

@@ -19,10 +19,10 @@ public:
     GuiElement(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize);
 
     //virtual destructor
-    virtual ~GuiElement() = 0;
+    virtual ~GuiElement() = default;
 
     // override this function to implement logic of element
-    virtual void update() = 0;
+    virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
 
     // override this function to implement view of element
     virtual void draw(sf::RenderTarget& target) = 0;
@@ -43,7 +43,7 @@ protected:
 inline GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
     : m_rectangle{ n_Size }
 {
-    m_rectangle.setSize(n_Position);
+    m_rectangle.setPosition(n_Position);
 }
 
 inline auto GuiElement::getGlobalPosition() 
