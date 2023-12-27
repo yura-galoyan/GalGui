@@ -1,5 +1,9 @@
+#define CUSTOM_DEBUG
 
 #include <GalGui/Button.hpp>
+
+
+#include <iostream>
 
 int main()
 {
@@ -8,10 +12,10 @@ int main()
 
 
 
-
     sf::Event event;
 
     GalGui::Widget::Button btn;
+    btn.link( []{ std::cout << "button is clicked" << std::endl; } );
 
     while(window.isOpen())
     {
@@ -30,7 +34,7 @@ int main()
         window.clear();
 
 
-        btn.draw(window);
+        window.draw(btn);
 
 
         window.display();

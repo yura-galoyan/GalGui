@@ -5,6 +5,11 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#ifdef CUSTOM_DEBUG
+#include <iostream>
+#endif
+
+
 namespace GalGui {
 
 namespace Widget{
@@ -12,7 +17,7 @@ namespace Widget{
 namespace Detail{
 
 // base class for all gui elements
-class GuiElement
+class GuiElement : public sf::Drawable
 {
 public:
     GuiElement() = default;
@@ -25,7 +30,7 @@ public:
     virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
 
     // override this function to implement view of element
-    virtual void draw(sf::RenderTarget& target) = 0;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 
     // get functions
     auto getGlobalPosition();

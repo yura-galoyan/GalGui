@@ -1,7 +1,7 @@
 ﻿  test.cpp
   Generating code
-  3 of 65 functions ( 4.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  13 of 176 functions ( 7.4%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   FightingGame.vcxproj -> C:\Users\yura\Desktop\sfmlGuiElements\x64\Release\FightingGame.exe
