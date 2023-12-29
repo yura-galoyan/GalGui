@@ -1,0 +1,1 @@
+ "C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/lib/libsfml-graphics.a" -lws2_32 -lwsock32 "C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/lib/libsfml-window.a" "C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/lib/libsfml-system.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
