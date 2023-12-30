@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GalGui\include\GalGui\Button.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\CheckBox.hpp" />
     <ClInclude Include="GalGui\include\GalGui\GuiElement.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

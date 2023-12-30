@@ -38,7 +38,6 @@ public:
     // override this function to implement view of element
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-
 public:
     void setState(State isPressed);
     void setOutlineColor(sf::Color newColor);
@@ -59,10 +58,17 @@ public:
 public:
     // Link funcntors to button with this functions
     // @param callBack signature is void()
-    void link(const CallBack_t& callBack);
+    void linkToClicked(const CallBack_t& callBack);
+    
+    // Link funcntors to button with this functions
+    // @param callBack signature is void()
+    void linkToOnHold(const CallBack_t& callBack);
 
     // kinda signal
-    void clicked();
+    void clicked() const;
+
+    void onHold() const;
+    
 
 private:
     void checkState(sf::RenderWindow& window, sf::Event& event);
@@ -76,7 +82,8 @@ private:
     bool m_bPressedOnce;
 
 private:
-    CallBackVector m_callBacks;
+    CallBackVector m_clicked_callBacks;
+    CallBackVector m_onHold_callBacks;
 
 };
 
@@ -91,6 +98,7 @@ inline Button::Button(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize)
 
 inline void Button::update(sf::RenderWindow& window, sf::Event& event)
 {
+    GuiElement::update(window,event);
     checkState(window, event);
 }
 
@@ -133,16 +141,15 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
     }
     if(event.type == sf::Event::MouseButtonPressed)
     {
-        if((event.mouseButton.button == sf::Mouse::Left) && !m_bPressedOnce)
+        if((event.mouseButton.button == sf::Mouse::Left))
         {
             if(isOnButton())
             {
+                
                 m_ButtonState = State::Pressed;
                 m_rectangle.setFillColor(getPressColor());
                 m_bPressedOnce = true;
-                clicked();
-                return;
-                
+                onHold();
             }
             else 
             {
@@ -159,9 +166,13 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
         {
             if(isOnButton())
             {
-                m_ButtonState = State::Hovered;
-                m_rectangle.setFillColor(getHoverColor());
-                m_bPressedOnce = false;
+                if(m_bPressedOnce)
+                {
+                    m_ButtonState = State::Hovered;
+                    m_rectangle.setFillColor(getHoverColor());
+                    m_bPressedOnce = false;
+                    clicked();
+                }
             }
             else 
             {
@@ -244,14 +255,27 @@ inline float Button::getOutlineThickness()
     return m_rectangle.getOutlineThickness();
 }
 
-inline void Button::link(const CallBack_t &callBack)
+inline void Button::linkToClicked(const CallBack_t &callBack)
 {
-    m_callBacks.push_back(callBack);
+    m_clicked_callBacks.push_back(callBack);
 }
 
-inline void Button::clicked()
+inline void Button::linkToOnHold(const CallBack_t &callBack)
 {
-    for(const auto& callBack : m_callBacks)
+    m_onHold_callBacks.push_back(callBack);
+}
+
+inline void Button::clicked() const
+{
+    for(const auto& callBack : m_clicked_callBacks)
+    {
+        callBack();
+    }
+}
+
+inline void Button::onHold() const
+{
+    for(const auto& callBack : m_onHold_callBacks)
     {
         callBack();
     }
