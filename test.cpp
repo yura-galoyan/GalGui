@@ -3,6 +3,7 @@
 
 #include <GalGui/Button.hpp>
 #include <GalGui/CheckBox.hpp>
+#include <GalGui/TextButton.hpp>
 
 int main()
 {
@@ -11,20 +12,28 @@ int main()
     window.setKeyRepeatEnabled(false);
     // creating button
     GalGui::Widget::Button btn;
-    btn.setGlobalPosition(sf::Vector2f(200,200));
-    std::vector<GalGui::Widget::CheckBox> checkboxes;
-    // creating checkboxes
-    for(int i = 0; i < 15; ++i)
+    sf::Font f;
+
+    
+    GalGui::Widget::CheckBox cbtn;
+    cbtn.setInitialSize(sf::Vector2f{200,200});
+    if(!f.loadFromFile("arial.ttf"))
     {
-        GalGui::Widget::CheckBox chbox(sf::Vector2f(30*i,10) );
-        checkboxes.push_back(chbox);   
+        std::cout  << "could not load " << std::endl;
     }
-    checkboxes[0].linkToClicked([&checkboxes](bool st) {
-        if (st) checkboxes[5].setChecked();
-        else checkboxes[5].setUnChecked();
-    });
+    GalGui::Widget::TextButton btnText("press me", &f);
+
+    btn.setGlobalPosition(sf::Vector2f(200,200));
+    btnText.setGlobalPosition(sf::Vector2f(400,200));
+
+
+
+
     btn.linkToClicked( [&window]{ std::cout << "done " << std::endl; } );
     btn.linkToOnHold([&window] {  std::cout << "HOLDIIING" << std::endl;  } );
+
+
+
     while(window.isOpen())
     {
         while(window.pollEvent(event))
@@ -34,14 +43,24 @@ int main()
                 window.close();
             }
         }
-        for(auto & c : checkboxes) { c.update(window,event); }
+
+        // update
+        cbtn.update(window,event);
         btn.update(window,event);
+        btnText.update(window,event);
+        
+        // end
+        
         window.clear();
-        for(auto & c : checkboxes)
-        {
-            window.draw(c);
-        }
+        
+        // draw
+        window.draw(cbtn);
         window.draw(btn);
+        window.draw(btnText);
+        
+        // end
+        
+
         window.display();
     }
 }

@@ -7,7 +7,6 @@
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "GuiElement.hpp"
 

@@ -29,5 +29,8 @@
     <ClInclude Include="GalGui\include\GalGui\CheckBox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GalGui\include\GalGui\TextButton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

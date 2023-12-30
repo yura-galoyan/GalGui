@@ -25,6 +25,7 @@
     <ClInclude Include="GalGui\include\GalGui\Button.hpp" />
     <ClInclude Include="GalGui\include\GalGui\CheckBox.hpp" />
     <ClInclude Include="GalGui\include\GalGui\GuiElement.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\TextButton.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

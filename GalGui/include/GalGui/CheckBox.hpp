@@ -57,6 +57,9 @@ public:
     sf::Color getFlagColor();
     std::string getText();
     float getOutlineThickness();
+
+// overriden seters
+public:
     virtual void setGlobalPosition( sf::Vector2f n_pos) override;
     virtual void setInitialSize( sf::Vector2f n_size) override;
 
@@ -84,9 +87,7 @@ private:
 
 };
 
-
-
-
+// implementation
 
 inline CheckBox::CheckBox(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize)
     : Detail::GuiElement{m_GlobalPosition, m_InitialSize}
@@ -119,7 +120,7 @@ inline void CheckBox::checkState(sf::RenderWindow& window, sf::Event& event)
     auto size = getInitialSize();
 
     auto mousePos = sf::Mouse::getPosition(window);
-    mousePos = window.mapCoordsToPixel(static_cast<sf:Vector2F(mousePos));
+    // mousePos = window.mapCoordsToPixel(static_cast<sf::Vector2f(mousePos));
 
     auto isOnCheckBox = [=]() -> bool {
         return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
