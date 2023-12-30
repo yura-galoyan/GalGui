@@ -1,1 +1,1 @@
--IC:/Users/yura/Desktop/sfmlGuiElements/GalGui/include
+-IC:/Users/galoyan/Desktop/personal/GalGui/dependencies/SFML/include -IC:/Users/galoyan/Desktop/personal/GalGui/GalGui/include -isystem "C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/include"
