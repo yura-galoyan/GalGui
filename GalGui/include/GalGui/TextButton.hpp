@@ -1,5 +1,5 @@
-#ifndef TEXT_BUTTON_HPP
-#define TEXT_BUTTON_HPP
+#ifndef GALGUI_TEXT_BUTTON_HPP
+#define GALGUI_TEXT_BUTTON_HPP
 
 #include "Button.hpp"
 
@@ -12,7 +12,7 @@ namespace Widget {
 class TextButton : public Button 
 {
 public:
-    TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f m_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f m_InitialSize = sf::Vector2f{100,50});
+    TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
 
     // overridinig this fucntino to also write text in it
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -25,7 +25,7 @@ public:
 
 
     const sf::Font* getFont();
-    std::string getText();
+    std::string getText() const;
     sf::Color getTextColor();
     unsigned getCharacterSize();
 
@@ -40,22 +40,17 @@ private:
     bool m_bAutoAdjustEnabled{true};
 };
 
-TextButton::TextButton(const std::string& text, const sf::Font* font, sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize )
-    : Button(m_GlobalPosition, m_InitialSize), defFont{font}
+TextButton::TextButton(const std::string& text, const sf::Font* font, sf::Vector2f GlobalPosition, sf::Vector2f InitialSize )
+    : Button(GlobalPosition, InitialSize), defFont{font}
 {
     setText(text);
-    setTextColor(sf::Color{255,0,0});
-    setGlobalPosition(m_GlobalPosition);
-    setInitialSize(m_InitialSize);
+    setTextColor(sf::Color{37,37,37});
+    setFont(defFont);
+    setGlobalPosition(getGlobalPosition());
     if(!font)
     {
         std::cout << "no font was provided, or it wasn't properly loaded" << std::endl;
     }
-
-    m_text.setOutlineColor(sf::Color::Black);
-    
-    setFont(defFont);
-
 }
 
 inline void TextButton::draw(sf::RenderTarget& target, sf::RenderStates states)const
@@ -64,12 +59,12 @@ inline void TextButton::draw(sf::RenderTarget& target, sf::RenderStates states)c
     target.draw(m_text);
 }
 
-void TextButton::setFont(const sf::Font* font)
+inline void TextButton::setFont(const sf::Font* font)
 {
     m_text.setFont(*font);
 }
 
-void TextButton::setText(const std::string& string)
+inline void TextButton::setText(const std::string& string)
 {
     m_text.setString(string);
 }
@@ -100,8 +95,8 @@ inline void TextButton::setInitialSize(sf::Vector2f n_size)
     if(m_bAutoAdjustEnabled)
     {
         Button::setInitialSize(n_size);
-        setCharacterSize( n_size.y / 4  );
-        m_text.setPosition( getGlobalPosition() + sf::Vector2f{n_size.x /3 , n_size.y / 3  }     );
+        setCharacterSize( n_size.y < n_size.x ? n_size.y / 3 : n_size.x / 5  );
+        m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 3  }  );
     }
     else
     {
@@ -109,14 +104,14 @@ inline void TextButton::setInitialSize(sf::Vector2f n_size)
     }
 }
 
-const sf::Font* TextButton::getFont()
+inline const sf::Font* TextButton::getFont()
 {
     return m_text.getFont();
 }
 
-std::string TextButton::getText()
+inline std::string TextButton::getText() const
 {
-    return m_text.getString();
+    return m_text.getString().toAnsiString();
 }
 
 inline sf::Color TextButton::getTextColor()
@@ -134,4 +129,4 @@ inline unsigned TextButton::getCharacterSize()
 }
 
 
-#endif //TEXT_BUTTON_HPP
+#endif //GALGUI_TEXT_BUTTON_HPP

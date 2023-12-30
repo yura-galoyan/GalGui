@@ -18,10 +18,10 @@ namespace Widget {
 // Standart button
 class Button : public Detail::GuiElement
 {
-public:
+private:
     using CallBack_t = std::function<void()>;
     using CallBackVector = std::vector<CallBack_t>;
-
+    
 public:
     enum class State
     {
@@ -46,7 +46,7 @@ public:
     void setText(std::string content);
     void setOutLineThickness(float value);
 
-    State getState();
+    State getState() const;
     sf::Color getOutlineColor();
     sf::Color getIdleColor();
     sf::Color getHoverColor();
@@ -184,7 +184,7 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
 
 }
 
-inline auto Button::getState() -> State
+inline Button::State Button::getState() const
 {
     return m_ButtonState;
 }

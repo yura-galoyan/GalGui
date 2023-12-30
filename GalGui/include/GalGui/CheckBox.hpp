@@ -157,13 +157,13 @@ inline void CheckBox::checkState(sf::RenderWindow& window, sf::Event& event)
 
 
     // set functions
-void CheckBox::setGlobalPosition( sf::Vector2f n_pos)
+inline void CheckBox::setGlobalPosition( sf::Vector2f n_pos)
 {
     m_rectangle.setPosition(n_pos);
     m_flag.setPosition(n_pos + sf::Vector2f{2,2});
 }
 
-void CheckBox::setInitialSize( sf::Vector2f n_size)
+inline void CheckBox::setInitialSize( sf::Vector2f n_size)
 {
     m_rectangle.setSize(n_size);
     m_flag.setSize(n_size - sf::Vector2f{4,4});
