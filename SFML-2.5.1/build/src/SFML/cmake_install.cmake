@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/src/SFML
+# Install script for directory: C:/Users/Asus/Desktop/chess/SFML-2.5.1/src/SFML
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,17 +34,17 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/mingw32/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "C:/MinGW/bin/objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/System/cmake_install.cmake")
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/Main/cmake_install.cmake")
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/Window/cmake_install.cmake")
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/Network/cmake_install.cmake")
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/Graphics/cmake_install.cmake")
-  include("C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/build/src/SFML/Audio/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/System/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/Main/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/Window/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/Network/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/Graphics/cmake_install.cmake")
+  include("C:/Users/Asus/Desktop/chess/SFML-2.5.1/build/src/SFML/Audio/cmake_install.cmake")
 
 endif()
 

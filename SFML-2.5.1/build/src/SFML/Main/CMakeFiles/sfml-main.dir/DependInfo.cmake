@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/galoyan/Desktop/personal/chess/SFML-2.5.1/src/SFML/Main/MainWin32.cpp" "src/SFML/Main/CMakeFiles/sfml-main.dir/MainWin32.cpp.obj" "gcc" "src/SFML/Main/CMakeFiles/sfml-main.dir/MainWin32.cpp.obj.d"
+  "C:/Users/Asus/Desktop/chess/SFML-2.5.1/src/SFML/Main/MainWin32.cpp" "src/SFML/Main/CMakeFiles/sfml-main.dir/MainWin32.cpp.obj" "gcc" "src/SFML/Main/CMakeFiles/sfml-main.dir/MainWin32.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

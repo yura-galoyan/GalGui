@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/galoyan/Desktop/personal/GalGui/test.cpp" "CMakeFiles/guitest.dir/test.cpp.obj" "gcc" "CMakeFiles/guitest.dir/test.cpp.obj.d"
+  "C:/Users/Asus/Desktop/GalGui/test.cpp" "CMakeFiles/guitest.dir/test.cpp.obj" "gcc" "CMakeFiles/guitest.dir/test.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

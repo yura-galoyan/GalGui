@@ -16,7 +16,7 @@ int main()
     sf::Font font;
 
     
-    if(!font.loadFromFile("arial.ttf"))
+    if(!font.loadFromFile("../Arial.ttf"))
     {
         std::cout  << "could not load " << std::endl;
     }
