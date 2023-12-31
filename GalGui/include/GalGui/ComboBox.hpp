@@ -46,6 +46,7 @@ private:
     std::list<TextButton> m_values;
     CallBackVector m_callBacks;
     bool m_bIsPressed{false};
+    bool starting{false};
 };
 
 inline ComboBox::ComboBox(const sf::Font *font, sf::Vector2f GlobalPosition, sf::Vector2f InitialSize)
@@ -63,8 +64,10 @@ inline void ComboBox::append(const std::string &value)
             onSetCurrentText(value);
         }
     );
+    auto pos = getGlobalPosition();
+    auto size = getInitialSize();
+    btn.setGlobalPosition(sf::Vector2f(pos) + sf::Vector2f(0, (m_values.size() + 1) * size.y));
     m_values.push_back(btn);
-
 }
 
 inline void ComboBox::remove(const std::string &value)
@@ -74,17 +77,17 @@ inline void ComboBox::remove(const std::string &value)
 
 inline void ComboBox::setGlobalPosition(sf::Vector2f n_pos)
 {
-    setGlobalPosition(n_pos);
+    TextButton::setGlobalPosition(n_pos);
     unsigned i{0};
     for(auto& value : m_values)
     {
-        value.setGlobalPosition(n_pos + sf::Vector2f(  n_pos.x, n_pos.y + value.getInitialSize().y * (++i)  ));
+        value.setGlobalPosition(n_pos + sf::Vector2f( 0, n_pos.y + value.getInitialSize().y * (++i)  ));
     }
 }
 
 inline void ComboBox::setInitialSize(sf::Vector2f n_size)
 {    
-    setInitialSize(n_size);
+    TextButton::setInitialSize(n_size);
     for(auto& value : m_values)
     {
         value.setInitialSize(n_size);
@@ -98,11 +101,42 @@ inline void ComboBox::update(sf::RenderWindow& window, sf::Event& event)
 {
     Button::update(window,event);
 
-    if(getState() == State::Pressed)
+    auto pos = getGlobalPosition();
+    auto size = getInitialSize();
+
+    auto mousePos = sf::Mouse::getPosition(window);
+    // mousePos = window.mapCoordsToPixel(static_cast<sf::Vector2f(mousePos));
+
+    auto isOnComboBox = [=]() -> bool {
+        return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
+               mousePos.y > pos.y && mousePos.y < pos.y + size.y;
+    };
+
+    if(event.type == sf::Event::MouseButtonPressed)
     {
-        m_bIsPressed = !m_bIsPressed;
+        if((event.mouseButton.button == sf::Mouse::Left))
+        {
+            if(isOnComboBox())
+            {
+                starting = true;
+            }        
+        }
     }
-    
+    if(event.type == sf::Event::MouseButtonReleased)
+    {
+        if(event.mouseButton.button == sf::Mouse::Left)
+        {
+            if(isOnComboBox())
+            {
+                if(starting)
+                {
+                    m_bIsPressed = !m_bIsPressed;
+                    starting = false;
+                }
+            }  
+        }
+    }
+
 
     if(m_bIsPressed)
     {
@@ -130,6 +164,7 @@ inline void ComboBox::draw(sf::RenderTarget& target, sf::RenderStates states) co
 
 inline void ComboBox::onSetCurrentText(const std::string &text)
 {
+    setText(text);
     for(const auto& cb : m_callBacks)
     {
         cb(text);

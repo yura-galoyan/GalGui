@@ -67,6 +67,7 @@ inline void TextButton::setFont(const sf::Font* font)
 inline void TextButton::setText(const std::string& string)
 {
     m_text.setString(string);
+    setInitialSize(getInitialSize());
 }
 
 inline void TextButton::setTextColor(sf::Color color)

@@ -152,7 +152,6 @@ inline void CheckBox::checkState(sf::RenderWindow& window, sf::Event& event)
             }  
         }
     }
-
 }
 
 

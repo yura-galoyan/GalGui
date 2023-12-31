@@ -45,6 +45,7 @@ public:
     void setPressColor(sf::Color newColor);
     void setText(std::string content);
     void setOutLineThickness(float value);
+    void setPressedOnce(bool enabled);
 
     State getState() const;
     sf::Color getOutlineColor();
@@ -53,6 +54,7 @@ public:
     sf::Color getPressColor();
     std::string getText();
     float getOutlineThickness();
+    bool getPressedOnce();
 
 public:
     // Link funcntors to button with this functions
@@ -144,7 +146,6 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
         {
             if(isOnButton())
             {
-                
                 m_ButtonState = State::Pressed;
                 m_rectangle.setFillColor(getPressColor());
                 m_bPressedOnce = true;
@@ -181,7 +182,6 @@ inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
             }          
         }
     }
-
 }
 
 inline Button::State Button::getState() const
@@ -224,6 +224,11 @@ inline void Button::setOutLineThickness(float value)
     m_rectangle.setOutlineThickness(value);
 }
 
+inline void Button::setPressedOnce(bool enabled)
+{
+    m_bPressedOnce = enabled;
+}
+
 inline sf::Color Button::getOutlineColor()
 {
     return m_rectangle.getOutlineColor();
@@ -252,6 +257,11 @@ inline std::string Button::getText()
 inline float Button::getOutlineThickness()
 {
     return m_rectangle.getOutlineThickness();
+}
+
+inline bool Button::getPressedOnce()
+{
+    return m_bPressedOnce;
 }
 
 inline void Button::linkToClicked(const CallBack_t &callBack)

@@ -21,11 +21,20 @@ int main()
         std::cout  << "could not load " << std::endl;
     }
 
-    GalGui::Widget::ComboBox box;
+    GalGui::Widget::ComboBox box(&font);
 
-    std::string name("Yura");
     box.setGlobalPosition(sf::Vector2f(100,50));
-    box.append(name);
+
+    
+    box.append("name1");
+    box.append("name2");
+    box.append("name3");
+    box.append("name4");
+    box.append("name5");
+
+
+
+
     box.linkOnSetCurrentText([](const std::string& text){
         std::cout << "in combo box is" << text << std::endl;
     });
