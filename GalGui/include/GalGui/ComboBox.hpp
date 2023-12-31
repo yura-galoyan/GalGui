@@ -24,22 +24,30 @@ public:
 
     // remove value from combo box
     void remove(const std::string& value);
-
-// overriden seters
-public:
-    virtual void setGlobalPosition( sf::Vector2f n_pos) override;
-    virtual void setInitialSize(sf::Vector2f n_size) override;
-
+    
     // override this function to implement logic of element
     virtual void update(sf::RenderWindow& window, sf::Event& event) override;
 
     // override this function to implement view of element
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    // signals
+
+// overriden seters
+public:
+    virtual void setGlobalPosition( sf::Vector2f n_pos) override;
+    virtual void setInitialSize(sf::Vector2f n_size) override;
+
+    bool setCurrentText(const std::string& newText);
+
+    std::string getCurrentText() const;
+
+
+// signals
+public:
     void onSetCurrentText(const std::string& text);
 
-    // slots emits when text is changed
+// slots emits when text is changed
+public:
     void linkOnSetCurrentText(const CallBack_t& callBack);
     
 private:
@@ -49,8 +57,8 @@ private:
     bool starting{false};
 };
 
-inline ComboBox::ComboBox(const sf::Font *font, sf::Vector2f GlobalPosition, sf::Vector2f InitialSize)
-    : TextButton("", font, GlobalPosition, InitialSize)
+inline ComboBox::ComboBox(const sf::Font *font, sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
+    : TextButton("", font, n_GlobalPosition, n_InitialSize)
 {
     setOutLineThickness(1);
 }
@@ -95,6 +103,24 @@ inline void ComboBox::setInitialSize(sf::Vector2f n_size)
 
 }
 
+inline bool ComboBox::setCurrentText(const std::string &newText)
+{
+    auto it = std::find_if(m_values.begin(), m_values.end(), [&newText](const auto& val){
+        return val.getText() == newText;
+    });
+
+    if(it != m_values.end())
+    {
+        setText(newText);
+        return true;
+    }
+    return false;
+}
+
+inline std::string ComboBox::getCurrentText() const
+{
+    return getText();
+}
 
 // override this function to implement logic of element
 inline void ComboBox::update(sf::RenderWindow& window, sf::Event& event)

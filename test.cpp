@@ -16,14 +16,14 @@ int main()
     sf::Font font;
 
     
-    if(!font.loadFromFile("../Arial.ttf"))
+    if(!font.loadFromFile("Arial.ttf"))
     {
         std::cout  << "could not load " << std::endl;
     }
 
     GalGui::Widget::ComboBox box(&font);
 
-    box.setGlobalPosition(sf::Vector2f(100,50));
+    box.setGlobalPosition(sf::Vector2f(200,50));
 
     
     box.append("name1");
@@ -33,7 +33,20 @@ int main()
     box.append("name5");
 
 
+    GalGui::Widget::Button btn(sf::Vector2f(150,300));
 
+    
+    GalGui::Widget::TextButton btnT("press me", &font);
+    GalGui::Widget::CheckBox cbox;
+    
+    btnT.setGlobalPosition(sf::Vector2f(300,300));
+
+    btn.linkToClicked([&box, &btnT, &cbox](){
+        if(cbox.getState() == GalGui::Widget::CheckBox::State::Checked)
+        {
+            btnT.setText(box.getCurrentText()); 
+        }
+    });
 
     box.linkOnSetCurrentText([](const std::string& text){
         std::cout << "in combo box is" << text << std::endl;
@@ -49,15 +62,19 @@ int main()
             }
         }
 
-
+        btn.update(window,event);
+        btnT.update(window,event);
         box.update(window,event);
+        cbox.update(window,event);
+        
         
         
         window.clear();
         
-        
-        
+        window.draw(cbox);
+        window.draw(btnT);
         window.draw(box);
+        window.draw(btn);
         
 
         window.display();

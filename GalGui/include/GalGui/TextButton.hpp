@@ -40,8 +40,8 @@ private:
     bool m_bAutoAdjustEnabled{true};
 };
 
-TextButton::TextButton(const std::string& text, const sf::Font* font, sf::Vector2f GlobalPosition, sf::Vector2f InitialSize )
-    : Button(GlobalPosition, InitialSize), defFont{font}
+TextButton::TextButton(const std::string& text, const sf::Font* font, sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize )
+    : Button(n_GlobalPosition, n_InitialSize), defFont{font}
 {
     setText(text);
     setTextColor(sf::Color{37,37,37});

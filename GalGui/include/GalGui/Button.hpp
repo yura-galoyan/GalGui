@@ -29,7 +29,7 @@ public:
     };
 
 public:
-    Button(sf::Vector2f m_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f m_InitialSize = sf::Vector2f{100,50});
+    Button(sf::Vector2f n_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f n_InitialSize = sf::Vector2f{100,50});
 
     // override this function to implement logic of element
     virtual void update(sf::RenderWindow& window, sf::Event& event) override;
@@ -88,8 +88,8 @@ private:
 
 };
 
-inline Button::Button(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize)
-    : Detail::GuiElement{m_GlobalPosition, m_InitialSize}
+inline Button::Button(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
+    : Detail::GuiElement{n_GlobalPosition, n_InitialSize}
 {
     m_rectangle.setOutlineColor(sf::Color{104,104,104 });
     m_ButtonState = State::Idle;

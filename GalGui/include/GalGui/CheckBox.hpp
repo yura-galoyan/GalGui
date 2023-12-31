@@ -30,7 +30,7 @@ public:
     };
 
 public:
-    CheckBox(sf::Vector2f m_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f m_InitialSize = sf::Vector2f{15,15});
+    CheckBox(sf::Vector2f n_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f n_InitialSize = sf::Vector2f{15,15});
 
     // override this function to implement logic of element
     virtual void update(sf::RenderWindow& window, sf::Event& event) override;
@@ -89,8 +89,8 @@ private:
 
 // implementation
 
-inline CheckBox::CheckBox(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize)
-    : Detail::GuiElement{m_GlobalPosition, m_InitialSize}
+inline CheckBox::CheckBox(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
+    : Detail::GuiElement{n_GlobalPosition, n_InitialSize}
 {
     m_CheckBoxState = State::Unchecked;
     m_rectangle.setFillColor(sf::Color{170,170,170});
