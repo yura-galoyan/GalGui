@@ -1,3 +1,3 @@
-C:/Users/yura/Desktop/sfmlGuiElements/Build/CMakeFiles/guitest.dir
-C:/Users/yura/Desktop/sfmlGuiElements/Build/CMakeFiles/edit_cache.dir
-C:/Users/yura/Desktop/sfmlGuiElements/Build/CMakeFiles/rebuild_cache.dir
+C:/Users/galoyan/Desktop/personal/GalGui/build/CMakeFiles/guitest.dir
+C:/Users/galoyan/Desktop/personal/GalGui/build/CMakeFiles/edit_cache.dir
+C:/Users/galoyan/Desktop/personal/GalGui/build/CMakeFiles/rebuild_cache.dir

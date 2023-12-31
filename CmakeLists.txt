@@ -1,6 +1,18 @@
 cmake_minimum_required(VERSION 3.15)
 project(guitest)
 
+
+set(CMAKE_CXX_STANDARD 17) 
+
+set(SFML_DIR "SFML-2.5.1/build")
+
+find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
+
+include_directories(dependencies/SFML/include)
 include_directories(GalGui/include)
 
 add_executable(guitest test.cpp)
+
+
+# Link SFML to your project
+target_link_libraries(guitest sfml-window sfml-graphics sfml-system)
