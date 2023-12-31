@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.15)
+project(GalGui)
+
+set(CMAKE_CXX_STANDARD 17) 
+
+find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
+
+set(SOURCES
+
+)
+
+add_library(GalGui ${SOURCES})
+
+target_link_libraries(GalGui sfml-window sfml-graphics sfml-system)

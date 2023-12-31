@@ -14,6 +14,11 @@ class TextButton : public Button
 public:
     TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
 
+    TextButton(const TextButton& other);
+
+    TextButton& operator=(TextButton other);
+
+    virtual ~TextButton() = default;
     // overridinig this fucntino to also write text in it
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -40,90 +45,6 @@ private:
     bool m_bAutoAdjustEnabled{true};
 };
 
-TextButton::TextButton(const std::string& text, const sf::Font* font, sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize )
-    : Button(n_GlobalPosition, n_InitialSize), defFont{font}
-{
-    setText(text);
-    setTextColor(sf::Color{37,37,37});
-    setFont(defFont);
-    setGlobalPosition(getGlobalPosition());
-    if(!font)
-    {
-        std::cout << "no font was provided, or it wasn't properly loaded" << std::endl;
-    }
-}
-
-inline void TextButton::draw(sf::RenderTarget& target, sf::RenderStates states)const
-{
-    Button::draw(target,states);
-    target.draw(m_text);
-}
-
-inline void TextButton::setFont(const sf::Font* font)
-{
-    m_text.setFont(*font);
-}
-
-inline void TextButton::setText(const std::string& string)
-{
-    m_text.setString(string);
-    setInitialSize(getInitialSize());
-}
-
-inline void TextButton::setTextColor(sf::Color color)
-{
-    m_text.setFillColor(color);
-}
-
-inline void TextButton::setCharacterSize(unsigned h)
-{
-    m_text.setCharacterSize(h);
-}
-
-inline void TextButton::setAutoAdjustSize(bool bEnabled)
-{
-    m_bAutoAdjustEnabled = bEnabled;
-}
-
-inline void TextButton::setGlobalPosition(sf::Vector2f n_pos)
-{
-    GuiElement::setGlobalPosition(n_pos);
-    setInitialSize(getInitialSize());
-}
-
-inline void TextButton::setInitialSize(sf::Vector2f n_size)
-{
-    if(m_bAutoAdjustEnabled)
-    {
-        Button::setInitialSize(n_size);
-        setCharacterSize( n_size.y < n_size.x ? n_size.y / 3 : n_size.x / 5  );
-        m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 3  }  );
-    }
-    else
-    {
-        Button::setInitialSize(n_size);
-    }
-}
-
-inline const sf::Font* TextButton::getFont()
-{
-    return m_text.getFont();
-}
-
-inline std::string TextButton::getText() const
-{
-    return m_text.getString().toAnsiString();
-}
-
-inline sf::Color TextButton::getTextColor()
-{
-    return m_text.getFillColor();
-}
-
-inline unsigned TextButton::getCharacterSize()
-{
-    return m_text.getCharacterSize();
-}
 
 }
 

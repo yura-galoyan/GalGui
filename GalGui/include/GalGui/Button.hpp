@@ -10,7 +10,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "GuiElement.hpp"
 
-
 namespace GalGui {
 
 namespace Widget {
@@ -30,6 +29,9 @@ public:
 
 public:
     Button(sf::Vector2f n_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f n_InitialSize = sf::Vector2f{100,50});
+    virtual ~Button() = default;
+
+    Button(const Button& button);
 
     // override this function to implement logic of element
     virtual void update(sf::RenderWindow& window, sf::Event& event) override;
@@ -87,208 +89,6 @@ private:
     CallBackVector m_onHold_callBacks;
 
 };
-
-inline Button::Button(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
-    : Detail::GuiElement{n_GlobalPosition, n_InitialSize}
-{
-    m_rectangle.setOutlineColor(sf::Color{104,104,104 });
-    m_ButtonState = State::Idle;
-    m_rectangle.setFillColor(getIdleColor());
-    m_rectangle.setOutlineThickness(3);
-}
-
-inline void Button::update(sf::RenderWindow& window, sf::Event& event)
-{
-    GuiElement::update(window,event);
-    checkState(window, event);
-}
-
-inline void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    target.draw(m_rectangle);
-}
-
-inline void Button::checkState(sf::RenderWindow& window, sf::Event& event)
-{
-    auto pos = getGlobalPosition();
-    auto size = getInitialSize();
-
-    auto mousePos = sf::Mouse::getPosition(window);
-
-    auto isOnButton = [=]() -> bool {
-        return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
-               mousePos.y > pos.y && mousePos.y < pos.y + size.y;
-    };
-
-    if(event.type == sf::Event::MouseMoved)
-    {
-        if(isOnButton())
-        {
-            m_ButtonState = State::Hovered;
-            if(m_bPressedOnce){
-                m_rectangle.setFillColor(getPressColor());
-            }
-            else
-            {
-                m_rectangle.setFillColor(getHoverColor());
-            }
-        }
-        else 
-        {
-            m_ButtonState = State::Idle;
-            m_rectangle.setFillColor(getIdleColor());
-            m_bPressedOnce = false;
-        }
-    }
-    if(event.type == sf::Event::MouseButtonPressed)
-    {
-        if((event.mouseButton.button == sf::Mouse::Left))
-        {
-            if(isOnButton())
-            {
-                m_ButtonState = State::Pressed;
-                m_rectangle.setFillColor(getPressColor());
-                m_bPressedOnce = true;
-                onHold();
-            }
-            else 
-            {
-                m_ButtonState = State::Idle;
-                m_rectangle.setFillColor(getIdleColor());
-                m_bPressedOnce = false;
-            }
-                     
-        }
-    }
-    if(event.type == sf::Event::MouseButtonReleased)
-    {
-        if(event.mouseButton.button == sf::Mouse::Left)
-        {
-            if(isOnButton())
-            {
-                if(m_bPressedOnce)
-                {
-                    m_ButtonState = State::Hovered;
-                    m_rectangle.setFillColor(getHoverColor());
-                    m_bPressedOnce = false;
-                    clicked();
-                }
-            }
-            else 
-            {
-                m_ButtonState = State::Idle;
-                m_rectangle.setFillColor(getIdleColor());
-                m_bPressedOnce = false;
-            }          
-        }
-    }
-}
-
-inline Button::State Button::getState() const
-{
-    return m_ButtonState;
-}
-
-inline void Button::setState(State isPressed)
-{
-    m_ButtonState = isPressed;
-}
-
-inline void Button::setOutlineColor(sf::Color newColor)
-{
-    m_rectangle.setOutlineColor(newColor);
-}
-
-inline void Button::setIdleColor(sf::Color newColor)
-{
-    m_idleColor = newColor;
-}
-
-inline void Button::setHoverColor(sf::Color newColor)
-{
-    m_HoverColor = newColor;
-}
-
-inline void Button::setPressColor(sf::Color newColor)
-{
-    m_PressColor = newColor;
-}
-
-inline void Button::setText(std::string content)
-{
-    m_text = content;
-}
-
-inline void Button::setOutLineThickness(float value)
-{
-    m_rectangle.setOutlineThickness(value);
-}
-
-inline void Button::setPressedOnce(bool enabled)
-{
-    m_bPressedOnce = enabled;
-}
-
-inline sf::Color Button::getOutlineColor()
-{
-    return m_rectangle.getOutlineColor();
-}
-
-inline sf::Color Button::getIdleColor()
-{
-    return m_idleColor;
-}
-
-inline sf::Color Button::getHoverColor()
-{
-    return m_HoverColor;
-}
-
-inline sf::Color Button::getPressColor()
-{
-    return m_PressColor;
-}
-
-inline std::string Button::getText()
-{
-    return m_text;
-}
-
-inline float Button::getOutlineThickness()
-{
-    return m_rectangle.getOutlineThickness();
-}
-
-inline bool Button::getPressedOnce()
-{
-    return m_bPressedOnce;
-}
-
-inline void Button::linkToClicked(const CallBack_t &callBack)
-{
-    m_clicked_callBacks.push_back(callBack);
-}
-
-inline void Button::linkToOnHold(const CallBack_t &callBack)
-{
-    m_onHold_callBacks.push_back(callBack);
-}
-
-inline void Button::clicked() const
-{
-    for(const auto& callBack : m_clicked_callBacks)
-    {
-        callBack();
-    }
-}
-
-inline void Button::onHold() const
-{
-    for(const auto& callBack : m_onHold_callBacks)
-    {
-        callBack();
-    }
-}
 
 }
 
