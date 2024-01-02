@@ -1,4 +1,4 @@
-#include "CheckBox.hpp"
+#include <GalGui/CheckBox.hpp>
 
 namespace GalGui {
 

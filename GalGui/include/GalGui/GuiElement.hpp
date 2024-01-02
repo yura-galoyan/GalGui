@@ -22,6 +22,12 @@ inline namespace Detail{
 // base class for all gui elements
 class GuiElement : public sf::Drawable
 {
+public: 
+    enum class LabelAlignment 
+    {
+        OnTop, InCenter, AtLeft, AtRight, OnBottom, None
+    };
+
 public:
     GuiElement() = default;
     GuiElement(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize);
@@ -61,6 +67,7 @@ protected:
 protected:
     sf::RectangleShape m_rectangle; 
     std::unique_ptr<Label> m_pLabel{ nullptr };
+    LabelAlignment m_alignment{LabelAlignment::None};
 
 private:
     bool m_bIsVisible{true};

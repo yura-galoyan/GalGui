@@ -5,6 +5,7 @@
 #include <GalGui/ComboBox.hpp>
 #include <GalGui/CheckBox.hpp>
 #include <GalGui/TextButton.hpp>
+#include <GalGui/Label.hpp>
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
     sf::Font font;
 
     
-    if(!font.loadFromFile("Arial.ttf"))
+    if(!font.loadFromFile("../Arial.ttf"))
     {
         std::cout  << "could not load " << std::endl;
     }
@@ -25,13 +26,13 @@ int main()
 
     box.setGlobalPosition(sf::Vector2f(200,50));
 
-    
     box.append("name1");
     box.append("name2");
     box.append("name3");
     box.append("name4");
     box.append("name5");
 
+    
 
     GalGui::Widget::Button btn(sf::Vector2f(150,300));
 
@@ -39,6 +40,8 @@ int main()
     GalGui::Widget::TextButton btnT("press me", &font);
     GalGui::Widget::CheckBox cbox;
     
+    GalGui::Widget::Label lbl("start", &font);
+    lbl.setTextColor(sf::Color::Red);
     btnT.setGlobalPosition(sf::Vector2f(300,300));
 
     btn.linkToClicked([&box, &btnT, &cbox](){
@@ -62,6 +65,7 @@ int main()
             }
         }
 
+        lbl.update(window,event);
         btn.update(window,event);
         btnT.update(window,event);
         box.update(window,event);
@@ -75,6 +79,7 @@ int main()
         window.draw(btnT);
         window.draw(box);
         window.draw(btn);
+        window.draw(lbl);
         
 
         window.display();

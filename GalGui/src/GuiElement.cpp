@@ -1,6 +1,6 @@
-#include "GuiElement.hpp"
+#include <GalGui/GuiElement.hpp>
 
-#include "Label.hpp"
+#include <GalGui/Label.hpp>
 
 namespace GalGui {
 
@@ -67,6 +67,28 @@ const sf::Vector2f&  GuiElement::getInitialSize()
 
 void GuiElement::setGlobalPosition( sf::Vector2f n_pos) 
 {
+    switch (m_alignment)
+    {
+    case LabelAlignment::OnTop:
+    {
+
+    }
+        break;
+    case LabelAlignment::InCenter:
+    {
+
+    }
+
+    case LabelAlignment::None:
+    {
+
+    }
+        break;
+    default:
+        break;
+    }
+
+
     m_rectangle.setPosition(n_pos); 
 }
 void GuiElement::setInitialSize( sf::Vector2f n_size) 

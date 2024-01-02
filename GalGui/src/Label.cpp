@@ -1,4 +1,4 @@
-#include "Label.hpp"
+#include <GalGui/Label.hpp>
 
 namespace GalGui {
 

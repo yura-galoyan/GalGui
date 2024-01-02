@@ -1,4 +1,4 @@
-#include "ComboBox.hpp"
+#include <GalGui/ComboBox.hpp>
 
 namespace GalGui {
 

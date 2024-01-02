@@ -3,10 +3,20 @@ project(GalGui)
 
 set(CMAKE_CXX_STANDARD 17) 
 
+set(SFML_DIR "../SFML-2.5.1/build")
+
 find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
 
-set(SOURCES
+include_directories(include)
 
+
+set(SOURCES
+src/Button.cpp
+src/CheckBox.cpp
+src/ComboBox.cpp 
+src/GuiElement.cpp 
+src/Label.cpp 
+src/TextButton.cpp
 )
 
 add_library(GalGui ${SOURCES})

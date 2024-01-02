@@ -1,4 +1,4 @@
-#include "TextButton.hpp"
+#include <GalGui/TextButton.hpp>
 
 namespace GalGui {
 
@@ -24,11 +24,12 @@ TextButton::TextButton(const TextButton &other) : Button(other)
     m_bAutoAdjustEnabled =  other.m_bAutoAdjustEnabled;
 }
 
-TextButton &TextButton::operator=(TextButton other)
+TextButton& TextButton::operator=(TextButton other)
 {
-    std::swap(m_text, other.m_text);
-    std::swap(defFont, other.defFont);
-    std::swap(m_bAutoAdjustEnabled, other.m_bAutoAdjustEnabled);
+    m_text = other.m_text;
+    defFont = other.defFont;
+    m_bAutoAdjustEnabled = other.m_bAutoAdjustEnabled;
+    return *this;
 }
 
 void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const

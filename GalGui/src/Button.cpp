@@ -1,4 +1,4 @@
-#include "Button.hpp"
+#include <GalGui/Button.hpp>
 namespace GalGui {
 
 namespace Widget {
