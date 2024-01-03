@@ -42,6 +42,13 @@ void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
     }
 }
 
+// override this function to implement view of element
+void draw(sf::RenderTarget& target, sf::RenderStates states) const 
+{
+    
+}
+
+
 
 void GuiElement::setLabel(std::unique_ptr<Label> label)
 {
