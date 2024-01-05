@@ -57,7 +57,8 @@ public:
     void show();
     void hide();
 
-    void setLabel(std::unique_ptr<Label> label);
+    void setLabel(Label* label, LabelAlignment alignment);
+    void setAlignment(LabelAlignment alignment);
     std::string getLabelText();
 
 
@@ -66,7 +67,7 @@ protected:
 
 protected:
     sf::RectangleShape m_rectangle; 
-    std::unique_ptr<Label> m_pLabel{ nullptr };
+    Label* m_pLabel{ nullptr };
     LabelAlignment m_alignment{LabelAlignment::None};
 
 private:

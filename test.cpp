@@ -55,6 +55,11 @@ int main()
         std::cout << "in combo box is" << text << std::endl;
     });
 
+
+    
+    box.setLabel(&lbl, GalGui::Widget::GuiElement::LabelAlignment::OnTop);
+
+
     while(window.isOpen())
     {
         while(window.pollEvent(event))
@@ -65,21 +70,13 @@ int main()
             }
         }
 
-        lbl.update(window,event);
-        btn.update(window,event);
-        btnT.update(window,event);
         box.update(window,event);
-        cbox.update(window,event);
         
         
         
         window.clear();
         
-        window.draw(cbox);
-        window.draw(btnT);
         window.draw(box);
-        window.draw(btn);
-        window.draw(lbl);
         
 
         window.display();

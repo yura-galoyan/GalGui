@@ -19,11 +19,12 @@ Detail::GuiElement::GuiElement(const GuiElement &other)
     m_rectangle = other.m_rectangle;
     m_bIsEnabled = other.m_bIsEnabled;
     m_bIsVisible = other.m_bIsVisible;
-    m_pLabel = other.m_pLabel ? std::make_unique<Label>(*(other.m_pLabel)) : nullptr;
+    m_pLabel = other.m_pLabel ? new Label (*(other.m_pLabel)) : nullptr;
 }
 
 Detail::GuiElement::~GuiElement()
 {
+    delete m_pLabel;
 }
 
 void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
@@ -42,17 +43,22 @@ void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
     }
 }
 
-// override this function to implement view of element
-void draw(sf::RenderTarget& target, sf::RenderStates states) const 
+void GuiElement::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    
+    if(m_pLabel) target.draw(*m_pLabel, states);
 }
 
 
-
-void GuiElement::setLabel(std::unique_ptr<Label> label)
+void GuiElement::setLabel(Label* label, LabelAlignment alignment)
 {
-    m_pLabel = std::move(label);
+    m_alignment = alignment;
+    m_pLabel = label;
+    setGlobalPosition(getGlobalPosition());
+}
+
+void GuiElement::setAlignment(LabelAlignment alignment)
+{
+    m_alignment = alignment;
 }
 
 std::string GuiElement::getLabelText()
@@ -74,25 +80,40 @@ const sf::Vector2f&  GuiElement::getInitialSize()
 
 void GuiElement::setGlobalPosition( sf::Vector2f n_pos) 
 {
-    switch (m_alignment)
+    if(m_pLabel)
     {
-    case LabelAlignment::OnTop:
-    {
+        auto pos = getGlobalPosition();
+        auto size = getInitialSize();
+        switch (m_alignment)
+        {
+        case LabelAlignment::OnTop:
+        {
+            auto labelPos = pos + m_pLabel->getInitialSize();
+            m_pLabel->setGlobalPosition(pos);
+        }
+            break;
 
-    }
-        break;
-    case LabelAlignment::InCenter:
-    {
+        case LabelAlignment::InCenter:
+        {
 
-    }
+        }
+            break;
 
-    case LabelAlignment::None:
-    {
+        case LabelAlignment::OnBottom:
+        {
 
-    }
-        break;
-    default:
-        break;
+        }
+            break;
+
+
+        case LabelAlignment::None:
+        {
+
+        }
+            break;
+        default:
+            break;
+        }
     }
 
 

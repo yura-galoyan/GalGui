@@ -38,6 +38,7 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if(getIsVisible())
     {
+        GuiElement::draw(target, states);
         target.draw(m_rectangle);
     }
 }

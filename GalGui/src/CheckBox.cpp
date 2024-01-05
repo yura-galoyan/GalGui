@@ -30,6 +30,7 @@ void CheckBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     if(getIsVisible())
     {
+        GuiElement::draw(target, states);
         target.draw(m_rectangle);
         if( m_CheckBoxState == State::Checked  ) target.draw(m_flag);
     }
