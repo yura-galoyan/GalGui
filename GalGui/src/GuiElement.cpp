@@ -19,12 +19,24 @@ Detail::GuiElement::GuiElement(const GuiElement &other)
     m_rectangle = other.m_rectangle;
     m_bIsEnabled = other.m_bIsEnabled;
     m_bIsVisible = other.m_bIsVisible;
-    m_pLabel = other.m_pLabel ? new Label (*(other.m_pLabel)) : nullptr;
+    if(other.m_pLabel)
+    {
+        m_bDeleteLabel = true;
+        m_pLabel = new Label (*(other.m_pLabel));
+    }
+    else{
+        m_bDeleteLabel = false;
+        m_pLabel =  nullptr;
+    }
+    
 }
 
 Detail::GuiElement::~GuiElement()
 {
-    delete m_pLabel;
+    if(m_bDeleteLabel)
+    {
+        delete m_pLabel;
+    }
 }
 
 void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
@@ -67,12 +79,12 @@ std::string GuiElement::getLabelText()
 }
 
 
-const sf::Vector2f&  GuiElement::getGlobalPosition() 
+const sf::Vector2f&  GuiElement::getGlobalPosition() const
 {
     return m_rectangle.getPosition(); 
 }
 
-const sf::Vector2f&  GuiElement::getInitialSize() 
+const sf::Vector2f&  GuiElement::getInitialSize() const
 {
     return m_rectangle.getSize(); 
 }
@@ -88,8 +100,8 @@ void GuiElement::setGlobalPosition( sf::Vector2f n_pos)
         {
         case LabelAlignment::OnTop:
         {
-            auto labelPos = pos + m_pLabel->getInitialSize();
-            m_pLabel->setGlobalPosition(pos);
+            auto labelPos_y = pos.y - m_pLabel->getInitialSize().y;
+            m_pLabel->setGlobalPosition(sf::Vector2f{pos.x, labelPos_y});
         }
             break;
 

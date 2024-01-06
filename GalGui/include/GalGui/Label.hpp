@@ -20,7 +20,7 @@ public:
 
 public:
     Label(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
-    ~Label() = default;
+    virtual ~Label() = default;
 
     Label(const Label& other);
 

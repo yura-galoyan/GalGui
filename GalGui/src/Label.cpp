@@ -30,7 +30,6 @@ Label::Label(const Label& other) : GuiElement(other)
 
 void Label::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-
     if(getIsVisible())
     {
         if(m_bShowOutline)
@@ -77,6 +76,7 @@ void Label::setGlobalPosition(sf::Vector2f n_pos)
 
 void Label::setInitialSize(sf::Vector2f n_size)
 {
+    GuiElement::setInitialSize(n_size);
     setCharacterSize( n_size.y - 5  );
     m_text.setPosition( getGlobalPosition() );
     setAlignment(getAlignment());

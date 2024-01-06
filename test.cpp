@@ -36,12 +36,13 @@ int main()
 
     GalGui::Widget::Button btn(sf::Vector2f(150,300));
 
-    
     GalGui::Widget::TextButton btnT("press me", &font);
     GalGui::Widget::CheckBox cbox;
     
     GalGui::Widget::Label lbl("start", &font);
     lbl.setTextColor(sf::Color::Red);
+    lbl.setAlignment(GalGui::Widget::Label::Alignment::Center);
+    lbl.setInitialSize(sf::Vector2f{100,50});
     btnT.setGlobalPosition(sf::Vector2f(300,300));
 
     btn.linkToClicked([&box, &btnT, &cbox](){
@@ -56,7 +57,6 @@ int main()
     });
 
 
-    
     box.setLabel(&lbl, GalGui::Widget::GuiElement::LabelAlignment::OnTop);
 
 

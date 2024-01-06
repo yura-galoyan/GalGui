@@ -43,8 +43,8 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0 ;
 
     // get functions
-    virtual const sf::Vector2f&  getGlobalPosition();
-    virtual const sf::Vector2f&  getInitialSize();
+    virtual const sf::Vector2f&  getGlobalPosition() const ;
+    virtual const sf::Vector2f&  getInitialSize() const;
 
     // set functions
     virtual void setGlobalPosition( sf::Vector2f n_pos);
@@ -72,8 +72,8 @@ protected:
 
 private:
     bool m_bIsVisible{true};
+    bool m_bDeleteLabel{false};
     inline static bool m_bIsEnabled{false};
-
 };
 
 }
