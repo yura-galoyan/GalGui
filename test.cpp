@@ -14,51 +14,18 @@ int main()
     window.setKeyRepeatEnabled(false);
 
 
-    sf::Font font;
 
+    GalGui::Widget::Button btn;
+
+    btn.setInitialSize(sf::Vector2f(50,100));
     
-    if(!font.loadFromFile("../Arial.ttf"))
-    {
-        std::cout  << "could not load " << std::endl;
-    }
-
-    GalGui::Widget::ComboBox box(&font);
-
-    box.setGlobalPosition(sf::Vector2f(200,50));
-
-    box.append("name1");
-    box.append("name2");
-    box.append("name3");
-    box.append("name4");
-    box.append("name5");
-
-    
-
-    GalGui::Widget::Button btn(sf::Vector2f(150,300));
-
-    GalGui::Widget::TextButton btnT("press me", &font);
-    GalGui::Widget::CheckBox cbox;
-    
-    GalGui::Widget::Label lbl("start", &font);
-    lbl.setTextColor(sf::Color::Red);
-    lbl.setAlignment(GalGui::Widget::Label::Alignment::Center);
-    lbl.setInitialSize(sf::Vector2f{100,50});
-    btnT.setGlobalPosition(sf::Vector2f(300,300));
-
-    btn.linkToClicked([&box, &btnT, &cbox](){
-        if(cbox.getState() == GalGui::Widget::CheckBox::State::Checked)
-        {
-            btnT.setText(box.getCurrentText()); 
+    //  make on hold to be triggered even when mouse is moving, thats more logical
+    btn.linkToOnHold(
+        [](){
+            static int a{0};
+            std::cout << "holding: " << ++a << std::endl;
         }
-    });
-
-    box.linkOnSetCurrentText([](const std::string& text){
-        std::cout << "in combo box is" << text << std::endl;
-    });
-
-
-    box.setLabel(&lbl, GalGui::Widget::GuiElement::LabelAlignment::OnTop);
-
+    );
 
     while(window.isOpen())
     {
@@ -70,14 +37,13 @@ int main()
             }
         }
 
-        box.update(window,event);
+        btn.update(window,event);
         
         
         
         window.clear();
         
-        window.draw(box);
-        
+        window.draw(btn);    
 
         window.display();
     }

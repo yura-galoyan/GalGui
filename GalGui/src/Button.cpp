@@ -24,7 +24,6 @@ Button::Button(const Button &other) : GuiElement(other)
     m_onHold_callBacks = other.m_onHold_callBacks;
 }
 
-
 void Button::update(sf::RenderWindow& window, sf::Event& event)
 {
     if(getIsVisible())
@@ -45,6 +44,7 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Button::checkState(sf::RenderWindow& window, sf::Event& event)
 {
+    
     auto pos = getGlobalPosition();
     auto size = getInitialSize();
 
