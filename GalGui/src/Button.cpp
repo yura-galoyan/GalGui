@@ -60,7 +60,12 @@ void Button::checkState(sf::RenderWindow& window, sf::Event& event)
         if(isOnButton())
         {
             m_ButtonState = State::Hovered;
-            if(m_bPressedOnce){
+            if(m_bPressedOnce)
+            {
+                if(m_bOnHold)
+                {
+                    onHold();
+                }
                 m_rectangle.setFillColor(getPressColor());
             }
             else
@@ -84,6 +89,7 @@ void Button::checkState(sf::RenderWindow& window, sf::Event& event)
                 m_ButtonState = State::Pressed;
                 m_rectangle.setFillColor(getPressColor());
                 m_bPressedOnce = true;
+                m_bOnHold = true;
                 onHold();
             }
             else 
@@ -114,7 +120,8 @@ void Button::checkState(sf::RenderWindow& window, sf::Event& event)
                 m_ButtonState = State::Idle;
                 m_rectangle.setFillColor(getIdleColor());
                 m_bPressedOnce = false;
-            }          
+            }
+            m_bOnHold = false;
         }
     }
 }

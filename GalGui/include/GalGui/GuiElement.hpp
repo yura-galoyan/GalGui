@@ -30,7 +30,7 @@ public:
 
 public:
     GuiElement() = default;
-    GuiElement(sf::Vector2f m_GlobalPosition, sf::Vector2f m_InitialSize);
+    GuiElement(sf::Vector2f globalPosition, sf::Vector2f initialSize);
     GuiElement(const GuiElement& other);
 
     //virtual destructor

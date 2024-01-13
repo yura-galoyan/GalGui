@@ -17,7 +17,7 @@ namespace Widget {
 // Standart button
 class Button : public Detail::GuiElement
 {
-private:
+public:
     using CallBack_t = std::function<void()>;
     using CallBackVector = std::vector<CallBack_t>;
     
@@ -59,11 +59,11 @@ public:
     bool getPressedOnce();
 
 public:
-    // Link funcntors to button with this functions
+    // Link functors to button with this functions
     // @param callBack signature is void()
     void linkToClicked(const CallBack_t& callBack);
     
-    // Link funcntors to button with this functions
+    // Link functors to button with this functions
     // @param callBack signature is void()
     void linkToOnHold(const CallBack_t& callBack);
 
@@ -83,7 +83,7 @@ private:
     sf::Color m_PressColor{sf::Color(128,128,128)};
     State m_ButtonState;
     bool m_bPressedOnce;
-
+    bool m_bOnHold;
 private:
     CallBackVector m_clicked_callBacks;
     CallBackVector m_onHold_callBacks;

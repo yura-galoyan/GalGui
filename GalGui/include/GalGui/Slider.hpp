@@ -3,6 +3,7 @@
 
 #include "GuiElement.hpp"
 
+#include <GalGui/Button.hpp>
 namespace GalGui {
 
 namespace Widget{
@@ -10,9 +11,7 @@ namespace Widget{
 class Slider : public GuiElement
 {
 public:
-
-public:
-    Slider(sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
+    Slider(sf::Vector2f globalPosition = sf::Vector2f{10,10}, sf::Vector2f initialSize = sf::Vector2f{100,50});
     ~Slider() = default;
 
     Slider(const Slider& other);
@@ -26,6 +25,18 @@ public:
     // overriden set functions
     virtual void setGlobalPosition(sf::Vector2f n_pos) override ;
     virtual void setInitialSize(sf::Vector2f n_size) override ;
+
+
+    // slots
+    void linkToOnHold(const Button::CallBack_t& callBack);
+
+
+private:
+    // signals
+    void valueChanged(double val);
+
+
+
 
     // get functions
     double getValue() const;
@@ -48,7 +59,7 @@ private:
 
 
 private:
-    
+    Button m_sliderButton;
 
 };
 
