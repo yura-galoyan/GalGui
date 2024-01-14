@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <iostream>
+#include <functional>
 
 
 namespace GalGui {
@@ -22,6 +23,10 @@ inline namespace Detail{
 // base class for all gui elements
 class GuiElement : public sf::Drawable
 {
+public:
+    using CallBack_t = std::function<void()>;
+    using CallBackVector = std::vector<CallBack_t>;
+    
 public: 
     enum class LabelAlignment 
     {

@@ -6,6 +6,7 @@
 #include <GalGui/CheckBox.hpp>
 #include <GalGui/TextButton.hpp>
 #include <GalGui/Label.hpp>
+#include <GalGui/Slider.hpp>
 
 int main()
 {
@@ -13,20 +14,11 @@ int main()
     sf::Event event;
     window.setKeyRepeatEnabled(false);
 
-
+    GalGui::Widget::Slider sld;
 
     GalGui::Widget::Button btn;
 
-    btn.setInitialSize(sf::Vector2f(50,100));
     
-    //  make on hold to be triggered even when mouse is moving, thats more logical
-    btn.linkToOnHold(
-        [](){
-            static int a{0};
-            std::cout << "holding: " << ++a << std::endl;
-        }
-    );
-
     while(window.isOpen())
     {
         while(window.pollEvent(event))
@@ -37,13 +29,13 @@ int main()
             }
         }
 
-        btn.update(window,event);
-        
-        
-        
+        btn.update(window, event);
+        sld.update(window,event);
+
         window.clear();
-        
-        window.draw(btn);    
+         
+        window.draw(btn);
+        window.draw(sld);
 
         window.display();
     }

@@ -4,47 +4,233 @@ namespace GalGui {
 
 namespace Widget{
 
-Slider::Slider(sf::Vector2f globalPosition = sf::Vector2f{10,10}, sf::Vector2f initialSize = sf::Vector2f{100,50})
+Slider::Slider(sf::Vector2f globalPosition, sf::Vector2f initialSize)
     : GuiElement(globalPosition, initialSize),
     m_value{50},
     m_maxValue{100},
     m_minValue{0},
     m_incValue{1}
 {
-    m_sliderButton.linkToOnHold(
-        []()
-        {
 
-        }
-    );
+    m_sliderController.setPosition(globalPosition);
+    m_sliderController.setSize(sf::Vector2f(initialSize.x / 10, initialSize.y));
+
+    m_initialPositionOfSlider = m_sliderController.getPosition();
+    
+    m_sliderController.setOutlineColor(sf::Color{104,104,104 });
+    m_ButtonState = Button::State::Idle;
+    m_sliderController.setFillColor(getIdleColor());
+    m_sliderController.setOutlineThickness(3);
+    setValue(m_value);
+
 }
 
 // overridinig this fucntino to also write text in it
 void Slider::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    GuiElement::draw(target,states);
+    if(getIsVisible())
+    {
+        GuiElement::draw(target, states);
+        target.draw(m_sliderController);
+    }
+        
 }
     
 /// @brief override this function in derived classes, but call it in the first line of that function
 void Slider::update(sf::RenderWindow& window, sf::Event& event)
 {
     GuiElement::update(window,event);
-    m_sliderButton.update(window,event);
+
+
+    
+    auto pos = m_sliderController.getPosition();
+    auto size = m_sliderController.getSize();
+
+    auto mousePos = sf::Mouse::getPosition(window);
+
+    auto isOnButton = [=]() -> bool {
+        return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
+               mousePos.y > pos.y && mousePos.y < pos.y + size.y;
+    };
+
+    m_ButtonState = Button::State::Idle;
+    m_sliderController.setFillColor(getIdleColor());
+
+    if(event.type == sf::Event::MouseMoved)
+    {
+        if(isOnButton())
+        {
+            m_ButtonState = Button::State::Hovered;
+            m_sliderController.setFillColor(getHoverColor());
+        }
+        if(m_bPressedOnce)
+        {
+            if(m_bOnHold)
+            {
+
+                auto valDiff = getMaxValue() - getMinValue();
+                auto maxValCoff = getMaxValue() * (getGlobalPosition().x + getInitialSize().x);
+                auto minValCoff = getMinValue() * getGlobalPosition().x;
+                auto valDiffCoff = valDiff * getInitialSize().x;
+
+
+
+                auto diffCoords_x = m_initialPositionOfMouse.x - mousePos.x;
+
+
+                double newValue;
+
+                newValue
+
+                setValue(
+
+
+
+
+
+                )
+
+
+
+                // mousePos - coords
+                // 
+                // m_initialPositionOfSlider - coords
+                // m_initialPositionOfMouse - coords
+                //
+                //
+                // getMinValue() - value
+                // getMaxValue() - value
+                // m_value
+
+
+
+            }
+
+            m_sliderController.setFillColor(getPressColor());
+        }
+ 
+    }
+    if(event.type == sf::Event::MouseButtonPressed)
+    {
+        if(event.mouseButton.button == sf::Mouse::Left)
+        {
+            if(isOnButton())
+            {
+                m_ButtonState = Button::State::Pressed;
+                m_sliderController.setFillColor(getPressColor());
+                m_bPressedOnce = true;
+                m_initialPositionOfMouse = sf::Vector2f(sf::Mouse::getPosition(window));
+                m_initialPositionOfSlider = m_sliderController.getPosition();
+                m_bOnHold = true;
+            }
+            else 
+            {
+                m_ButtonState = Button::State::Idle;
+                m_sliderController.setFillColor(getIdleColor());
+                m_bPressedOnce = false;
+            }
+                     
+        }
+    }
+    if(event.type == sf::Event::MouseButtonReleased)
+    {
+        if(event.mouseButton.button == sf::Mouse::Left)
+        {
+            if(isOnButton())
+            {
+                if(m_bPressedOnce)
+                {
+                    m_ButtonState = Button::State::Hovered;
+                    m_sliderController.setFillColor(getHoverColor());
+                    m_bPressedOnce = false;
+                }
+            }
+            else 
+            {
+                m_ButtonState = Button::State::Idle;
+                m_sliderController.setFillColor(getIdleColor());
+                m_bPressedOnce = false;
+            }
+            m_bOnHold = false;
+        }
+    }
 }
 
-
-void Slider::linkToOnHold(const Button::CallBack_t& callBack)
+void Slider::linkToValueChanged(const CallBack_t& callBack)
 {
-    m_sliderButton.linkToOnHold(callBack);
+    m_callBacks.push_back(callBack);
 }
-
 
 void Slider::valueChanged(double val)
 {
 
 }
 
+// overriden set functions
+void Slider::setGlobalPosition(sf::Vector2f n_pos)
+{
+    GuiElement::setGlobalPosition(n_pos);
+    m_sliderController.setPosition(sf::Vector2f( n_pos.x + ((getInitialSize().x * m_value) / (m_maxValue - m_minValue)),n_pos.y ));
+}
 
+void Slider::setInitialSize(sf::Vector2f n_size)
+{
+    // was 200x20
+    // n_size is 100x10
+    GuiElement::setInitialSize(n_size);
+    m_sliderController.setSize(sf::Vector2f( n_size.x / 10 ,n_size.y ));
+    setGlobalPosition(getGlobalPosition());
+}
+
+void Slider::setOutlineColor(sf::Color newColor)
+{
+    m_rectangle.setOutlineColor(newColor);
+}
+
+void Slider::setIdleColor(sf::Color newColor)
+{
+    m_idleColor = newColor;
+}
+
+void Slider::setHoverColor(sf::Color newColor)
+{
+    m_HoverColor = newColor;
+}
+
+void Slider::setPressColor(sf::Color newColor)
+{
+    m_PressColor = newColor;
+}
+
+void Slider::setOutLineThickness(float value)
+{
+    m_rectangle.setOutlineThickness(value);
+}
+
+sf::Color Slider::getOutlineColor()
+{
+    return m_rectangle.getOutlineColor();
+}
+
+sf::Color Slider::getIdleColor()
+{
+    return m_idleColor;
+}
+
+sf::Color Slider::getHoverColor()
+{
+    return m_HoverColor;
+}
+
+sf::Color Slider::getPressColor()
+{
+    return m_PressColor;
+}
+
+float Slider::getOutlineThickness()
+{
+    return m_rectangle.getOutlineThickness();
+}
 
 double Slider::getValue() const
 {
@@ -65,11 +251,16 @@ double Slider::getIncValue() const
 {
     return m_incValue;
 }
- 
-    
+
 void Slider::setValue(double val)
 {
     m_value = val;
+    
+
+    auto pos = m_value * (getInitialSize().x + getGlobalPosition().x  );
+
+    m_sliderController.setPosition(pos, getGlobalPosition().y);
+
 }
 
 void Slider::setMaxValue(double val)
@@ -86,11 +277,6 @@ void Slider::setIncValue(double val)
 {
     m_incValue = val;
 }
-
-
-
-
-
 
 }
 
