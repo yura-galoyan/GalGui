@@ -68,7 +68,7 @@ void GuiElement::setLabel(Label* label, LabelAlignment alignment)
     setGlobalPosition(getGlobalPosition());
 }
 
-void GuiElement::setAlignment(LabelAlignment alignment)
+void GuiElement::setLabelAlignment(LabelAlignment alignment)
 {
     m_alignment = alignment;
 }

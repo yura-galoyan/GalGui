@@ -11,25 +11,25 @@ Slider::Slider(sf::Vector2f globalPosition, sf::Vector2f initialSize)
     m_minValue{0},
     m_incValue{1}
 {
-
+    // initialize slider controller
     m_sliderController.setPosition(globalPosition);
     m_sliderController.setSize(sf::Vector2f(initialSize.x / 10, initialSize.y));
-
     m_initialPositionOfSlider = m_sliderController.getPosition();
-    
     m_sliderController.setOutlineColor(sf::Color{104,104,104 });
-    m_ButtonState = Button::State::Idle;
     m_sliderController.setFillColor(getIdleColor());
     m_sliderController.setOutlineThickness(3);
+
+    // set state
+    m_ButtonState = Button::State::Idle;
+
+    // set value, this functions sets slider to its correct position
     setValue(m_value);
 
-
+    // initilze m_slider line
     m_sliderLine.setFillColor(getIdleColor());
 
+    // this functions sets m_sliderLine to its correct position, according go m_globalPosition
     setInitialSize(getInitialSize());
-
-    
-
 }
 
 // overridinig this fucntino to also write text in it
@@ -49,8 +49,6 @@ void Slider::update(sf::RenderWindow& window, sf::Event& event)
 {
     GuiElement::update(window,event);
 
-
-    
     auto pos = m_sliderController.getPosition();
     auto size = m_sliderController.getSize();
 
@@ -75,22 +73,14 @@ void Slider::update(sf::RenderWindow& window, sf::Event& event)
         {
             if(m_bOnHold)
             {
-
                 auto valDiff = getMaxValue() - getMinValue();
-                
                 auto diffCoords_x = mousePos.x - m_initialPositionOfMouse.x;
-                
                 double newValue = (diffCoords_x / getInitialSize().x) * ( valDiff) + m_value;
                 if(newValue < getMinValue()) newValue = getMinValue();
                 if(newValue > getMaxValue()) newValue = getMaxValue();
                 setValue(newValue);
-                
                 m_initialPositionOfMouse = sf::Vector2f(mousePos);
-
-                std::cout << "newValue:  " << newValue<< std::endl;
-
             }
-
             m_sliderController.setFillColor(getPressColor());
         }
     }
@@ -147,7 +137,10 @@ void Slider::linkToValueChanged(const CallBack_t& callBack)
 
 void Slider::valueChanged(double val)
 {
-
+    for(auto& cb : m_callBacks)
+    {
+        cb(val);
+    }
 }
 
 // overriden set functions
@@ -245,6 +238,8 @@ void Slider::setValue(double val)
     auto pos = getGlobalPosition().x + (m_value / diff) * getInitialSize().x   ;
 
     m_sliderController.setPosition(pos, getGlobalPosition().y);
+
+    valueChanged(val);
 
 }
 

@@ -17,7 +17,15 @@ int main()
     GalGui::Widget::Slider sld;
 
     GalGui::Widget::Button btn;
+    sld.linkToValueChanged([](double val)
+    {
+        std::cout << val << std::endl;
+    });
 
+    btn.linkToClicked([&sld]()
+    {
+        sld.setValue(100);
+    });
     
     while(window.isOpen())
     {

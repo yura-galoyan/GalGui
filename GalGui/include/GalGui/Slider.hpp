@@ -11,6 +11,9 @@ namespace Widget{
 class Slider : public GuiElement
 {
 public:
+    using CallBack_t = std::function<void(double)>;
+    using CallBackVector = std::vector<CallBack_t>;
+public:
     Slider(sf::Vector2f globalPosition = sf::Vector2f{220,100}, sf::Vector2f initialSize = sf::Vector2f{200,30});
     ~Slider() = default;
 
@@ -23,7 +26,7 @@ public:
     void update(sf::RenderWindow& window, sf::Event& event) override ;
 
 
-    /// @note Change value to val <br>
+    /// @note Change value to val
     /// @note val needs to be in between minValue and maxValue, otherwise
     /// value will be set to maxValue
     /// @param val new value
@@ -35,7 +38,7 @@ public:
     void setInitialSize(sf::Vector2f n_size) override ;
 
 
-    // slots
+    // slots signature is void(double)
     void linkToValueChanged(const CallBack_t& callBack);
 
 
@@ -45,7 +48,7 @@ private:
 
 
 
-
+public:
     // get functions
     double getValue() const;
     double getMaxValue() const;
@@ -56,12 +59,6 @@ private:
     void setMaxValue(double val);
     void setMinValue(double val);
     void setIncValue(double val);
-
-private:
-    double m_value;
-    double m_maxValue;
-    double m_minValue;
-    double m_incValue;
 
 public:
     void setOutlineColor(sf::Color newColor);
@@ -75,6 +72,12 @@ public:
     sf::Color getHoverColor();
     sf::Color getPressColor();
     float getOutlineThickness();
+
+private:
+    double m_value;
+    double m_maxValue;
+    double m_minValue;
+    double m_incValue;
 
 private:
     sf::RectangleShape m_sliderController;
