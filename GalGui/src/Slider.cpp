@@ -23,6 +23,13 @@ Slider::Slider(sf::Vector2f globalPosition, sf::Vector2f initialSize)
     m_sliderController.setOutlineThickness(3);
     setValue(m_value);
 
+
+    m_sliderLine.setFillColor(getIdleColor());
+
+    setInitialSize(getInitialSize());
+
+    
+
 }
 
 // overridinig this fucntino to also write text in it
@@ -31,6 +38,7 @@ void Slider::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if(getIsVisible())
     {
         GuiElement::draw(target, states);
+        target.draw(m_sliderLine);
         target.draw(m_sliderController);
     }
         
@@ -69,50 +77,26 @@ void Slider::update(sf::RenderWindow& window, sf::Event& event)
             {
 
                 auto valDiff = getMaxValue() - getMinValue();
-                auto maxValCoff = getMaxValue() * (getGlobalPosition().x + getInitialSize().x);
-                auto minValCoff = getMinValue() * getGlobalPosition().x;
-                auto valDiffCoff = valDiff * getInitialSize().x;
+                
+                auto diffCoords_x = mousePos.x - m_initialPositionOfMouse.x;
+                
+                double newValue = (diffCoords_x / getInitialSize().x) * ( valDiff) + m_value;
+                if(newValue < getMinValue()) newValue = getMinValue();
+                if(newValue > getMaxValue()) newValue = getMaxValue();
+                setValue(newValue);
+                
+                m_initialPositionOfMouse = sf::Vector2f(mousePos);
 
-
-
-                auto diffCoords_x = m_initialPositionOfMouse.x - mousePos.x;
-
-
-                double newValue;
-
-                newValue
-
-                setValue(
-
-
-
-
-
-                )
-
-
-
-                // mousePos - coords
-                // 
-                // m_initialPositionOfSlider - coords
-                // m_initialPositionOfMouse - coords
-                //
-                //
-                // getMinValue() - value
-                // getMaxValue() - value
-                // m_value
-
-
+                std::cout << "newValue:  " << newValue<< std::endl;
 
             }
 
             m_sliderController.setFillColor(getPressColor());
         }
- 
     }
     if(event.type == sf::Event::MouseButtonPressed)
     {
-        if(event.mouseButton.button == sf::Mouse::Left)
+        if(event.mouseButton.button == sf::Mouse::Left) 
         {
             if(isOnButton())
             {
@@ -171,14 +155,14 @@ void Slider::setGlobalPosition(sf::Vector2f n_pos)
 {
     GuiElement::setGlobalPosition(n_pos);
     m_sliderController.setPosition(sf::Vector2f( n_pos.x + ((getInitialSize().x * m_value) / (m_maxValue - m_minValue)),n_pos.y ));
+    m_sliderLine.setPosition(n_pos.x, n_pos.y + getInitialSize().y/4);
 }
 
 void Slider::setInitialSize(sf::Vector2f n_size)
 {
-    // was 200x20
-    // n_size is 100x10
     GuiElement::setInitialSize(n_size);
     m_sliderController.setSize(sf::Vector2f( n_size.x / 10 ,n_size.y ));
+    m_sliderLine.setSize(sf::Vector2f(n_size.x, n_size.y / 4));
     setGlobalPosition(getGlobalPosition());
 }
 
@@ -256,8 +240,9 @@ void Slider::setValue(double val)
 {
     m_value = val;
     
+    auto diff = getMaxValue() - getMinValue();
 
-    auto pos = m_value * (getInitialSize().x + getGlobalPosition().x  );
+    auto pos = getGlobalPosition().x + (m_value / diff) * getInitialSize().x   ;
 
     m_sliderController.setPosition(pos, getGlobalPosition().y);
 

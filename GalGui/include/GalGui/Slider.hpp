@@ -78,7 +78,9 @@ public:
 
 private:
     sf::RectangleShape m_sliderController;
-    
+    sf::RectangleShape m_sliderLine;
+
+
     sf::Color m_idleColor{sf::Color(171,171,171)};
     sf::Color m_HoverColor{sf::Color(196,196,196)};
     sf::Color m_PressColor{sf::Color(128,128,128)};
