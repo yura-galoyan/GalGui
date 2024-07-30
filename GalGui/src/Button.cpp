@@ -1,4 +1,5 @@
 #include <GalGui/Button.hpp>
+
 namespace GalGui {
 
 namespace Widget {
@@ -48,7 +49,7 @@ void Button::checkState(sf::RenderWindow& window, sf::Event& event)
     auto pos = getGlobalPosition();
     auto size = getInitialSize();
 
-    auto mousePos = sf::Mouse::getPosition(window);
+    auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
 
     auto isOnButton = [=]() -> bool {
         return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&

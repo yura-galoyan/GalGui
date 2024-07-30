@@ -17,7 +17,6 @@ GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
 Detail::GuiElement::GuiElement(const GuiElement &other)
 {
     m_rectangle = other.m_rectangle;
-    m_bIsEnabled = other.m_bIsEnabled;
     m_bIsVisible = other.m_bIsVisible;
     if(other.m_pLabel)
     {
@@ -78,8 +77,7 @@ std::string GuiElement::getLabelText()
     return m_pLabel->getText();
 }
 
-
-const sf::Vector2f&  GuiElement::getGlobalPosition() const
+const sf::Vector2f& GuiElement::getGlobalPosition() const
 {
     return m_rectangle.getPosition(); 
 }
@@ -88,7 +86,6 @@ const sf::Vector2f&  GuiElement::getInitialSize() const
 {
     return m_rectangle.getSize(); 
 }
-
 
 void GuiElement::setGlobalPosition( sf::Vector2f n_pos) 
 {
@@ -128,7 +125,6 @@ void GuiElement::setGlobalPosition( sf::Vector2f n_pos)
         }
     }
 
-
     m_rectangle.setPosition(n_pos); 
 }
 void GuiElement::setInitialSize( sf::Vector2f n_size) 
@@ -138,7 +134,7 @@ void GuiElement::setInitialSize( sf::Vector2f n_size)
 
 void GuiElement::setStretch(bool bEnabled)
 {
-    m_bIsEnabled = false;
+    m_bIsEnabled = bEnabled;
 }
 
 void GuiElement::show()
@@ -155,7 +151,6 @@ bool GuiElement::getIsVisible() const
 {
     return m_bIsVisible;
 }
-
 
 }
 

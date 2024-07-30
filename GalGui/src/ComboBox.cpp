@@ -77,7 +77,7 @@ void ComboBox::update(sf::RenderWindow& window, sf::Event& event)
         Button::update(window,event);
         auto pos = getGlobalPosition();
         auto size = getInitialSize();
-        auto mousePos = sf::Mouse::getPosition(window);
+        auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
         // mousePos = window.mapCoordsToPixel(static_cast<sf::Vector2f(mousePos));
         auto isOnComboBox = [=]() -> bool {
             return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&

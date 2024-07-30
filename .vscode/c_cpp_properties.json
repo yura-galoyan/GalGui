@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/dependencies/SFML/include"
+                "${workspaceFolder}/dependencies/SFML/include",
+                "${workspaceFolder}/Galgui/include"
             ],
             "defines": [
                 "_DEBUG",

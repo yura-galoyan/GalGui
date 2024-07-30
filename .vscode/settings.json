@@ -1,5 +1,7 @@
 {
     "files.associations": {
+        "*.hpp": "cpp",
+        "t.hpp": "cpp",
         "*.frag": "glsl",
         "algorithm": "cpp",
         "atomic": "cpp",
@@ -58,6 +60,22 @@
         "functional": "cpp",
         "list": "cpp",
         "unordered_map": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "span": "cpp",
+        "charconv": "cpp",
+        "cstdarg": "cpp",
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "format": "cpp",
+        "numbers": "cpp",
+        "text_encoding": "cpp",
+        "cinttypes": "cpp",
+        "variant": "cpp"
     }
 }

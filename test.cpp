@@ -8,25 +8,37 @@
 #include <GalGui/Label.hpp>
 #include <GalGui/Slider.hpp>
 
+#include <GalGui/HorizontalLayout.hpp>
+#include <GalGui/VerticalLayout.hpp>
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode{640,640},"button test");
     sf::Event event;
     window.setKeyRepeatEnabled(false);
 
-    GalGui::Widget::Slider sld;
-
-    GalGui::Widget::Button btn;
-    sld.linkToValueChanged([](double val)
-    {
-        std::cout << val << std::endl;
-    });
-
-    btn.linkToClicked([&sld]()
-    {
-        sld.setValue(100);
-    });
+    GalGui::Widget::Button btn1;
+    GalGui::Widget::Button btn2;
+    GalGui::Widget::Button btn3;
+    GalGui::Widget::Button btn4;
+    GalGui::Widget::Button btn5;
+    GalGui::Widget::Button btn6;
     
+    GalGui::Widget::VerticalLayout vLayout;
+    GalGui::Widget::HorizontalLayout hLayout;
+
+    vLayout.setGlobalPosition({ 100,200 });
+
+    
+    hLayout.setGlobalPosition({ 10,20 });
+    hLayout.addChild(&btn1);
+    hLayout.addChild(&btn2);
+    hLayout.addChild(&btn3);
+
+    vLayout.addChild(&btn4);
+    vLayout.addChild(&btn5);
+    vLayout.addChild(&btn6);
+
     while(window.isOpen())
     {
         while(window.pollEvent(event))
@@ -37,13 +49,13 @@ int main()
             }
         }
 
-        btn.update(window, event);
-        sld.update(window,event);
+        vLayout.update(window, event);
+        hLayout.update(window, event);
 
         window.clear();
-         
-        window.draw(btn);
-        window.draw(sld);
+        
+        window.draw(vLayout);
+        window.draw(hLayout);
 
         window.display();
     }
