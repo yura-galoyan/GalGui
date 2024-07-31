@@ -35,6 +35,10 @@ public:
     GuiElement(sf::Vector2f globalPosition, sf::Vector2f initialSize);
     GuiElement(const GuiElement& other);
 
+    void setElementName(const std::string& elementName);
+
+    std::string getElementName() const;
+
     //virtual destructor
     virtual ~GuiElement();
 
@@ -76,6 +80,8 @@ private:
     bool m_bIsVisible{true};
     bool m_bDeleteLabel{false};
     inline static bool m_bIsEnabled{false};
+
+    std::string mElementName;
 };
 
 }

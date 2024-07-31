@@ -50,6 +50,16 @@ void Layout::update(sf::RenderWindow& window, sf::Event& event)
     }
 }
 
+void Layout::setSpacing(float spacing)
+{
+    mSpacing = spacing;
+}
+    
+float Layout::getSpacing() const
+{
+    return mSpacing;
+}
+
 }
 
 }

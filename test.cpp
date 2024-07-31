@@ -19,7 +19,7 @@ int main()
 
     GalGui::Widget::Button btn1;
     GalGui::Widget::Button btn2;
-    GalGui::Widget::Button btn3;
+    GalGui::Widget::Slider btn3;
     GalGui::Widget::Button btn4;
     GalGui::Widget::Button btn5;
     GalGui::Widget::Button btn6;
@@ -28,11 +28,13 @@ int main()
     GalGui::Widget::HorizontalLayout hLayout;
 
     vLayout.setGlobalPosition({ 100,200 });
+    vLayout.setSpacing(10);
+    hLayout.setGlobalPosition({ 10,20 });
+    hLayout.setSpacing(10);
 
     
-    hLayout.setGlobalPosition({ 10,20 });
     hLayout.addChild(&btn1);
-    hLayout.addChild(&btn2);
+    hLayout.addChild(&vLayout);
     hLayout.addChild(&btn3);
 
     vLayout.addChild(&btn4);

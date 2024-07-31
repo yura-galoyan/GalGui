@@ -16,7 +16,7 @@ void VerticalLayout::addChild(GuiElement *pGuiElement)
     mGuiElements.push_back(pGuiElement);
     pGuiElement->setGlobalPosition({
         last->getGlobalPosition().x ,
-        last->getGlobalPosition().y + last->getInitialSize().y
+        last->getGlobalPosition().y + last->getInitialSize().y  + getSpacing()
     });
 }
 
@@ -34,7 +34,7 @@ void VerticalLayout::configureElemets()
         ( 
             {
                 (*std::prev(it))->getGlobalPosition().x,
-                (*std::prev(it))->getGlobalPosition().y + (*std::prev(it))->getInitialSize().y + 1
+                (*std::prev(it))->getGlobalPosition().y + (*std::prev(it))->getInitialSize().y + getSpacing()
             }
         );
     }

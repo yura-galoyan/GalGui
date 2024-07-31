@@ -14,7 +14,17 @@ GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
     m_rectangle.setOutlineColor(sf::Color::Green);
 }
 
-Detail::GuiElement::GuiElement(const GuiElement &other)
+void GuiElement::setElementName(const std::string& elementName)
+{
+    mElementName = elementName;
+}
+
+std::string GuiElement::getElementName() const
+{
+    return mElementName;
+}
+
+GuiElement::GuiElement(const GuiElement &other)
 {
     m_rectangle = other.m_rectangle;
     m_bIsVisible = other.m_bIsVisible;

@@ -33,12 +33,19 @@ public:
     /// @param event Pass here event object
     virtual void update(sf::RenderWindow& window, sf::Event& event) override;
 
+    void setSpacing(float spacing);
+    
+    float getSpacing() const;
+
 private:
     /// @brief Change positions of all gui elements to keep alignment
     virtual void configureElemets() = 0;
 
 protected:
     std::list<GuiElement*> mGuiElements;
+
+private:
+    float mSpacing;
 
 };
 
