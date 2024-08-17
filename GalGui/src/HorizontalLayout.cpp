@@ -1,4 +1,5 @@
 #include <GalGui/HorizontalLayout.hpp>
+#include <GalGui/VerticalLayout.hpp>
 
 namespace GalGui {
 
@@ -6,20 +7,25 @@ namespace Widget{
 
 void HorizontalLayout::addChild(GuiElement *pGuiElement)
 {
-    std::cout << mGuiElements.size() << "size before inserting " << pGuiElement->getElementName() << std::endl;
-
     if(mGuiElements.empty())
     {
         mGuiElements.push_back(pGuiElement);
-        pGuiElement->setGlobalPosition(getGlobalPosition() + sf::Vector2f{5,0});
+        pGuiElement->setGlobalPosition(GuiElement::getGlobalPosition());
         return;
     }
     auto last = mGuiElements.back();
     mGuiElements.push_back(pGuiElement);
+    pGuiElement->setParent(this);
     pGuiElement->setGlobalPosition({
             last->getGlobalPosition().x + last->getInitialSize().x  + getSpacing(),
             last->getGlobalPosition().y
-        });
+        });    
+
+    if(!getParent())
+        return;
+    
+    getParent()->configureElemets();
+
 }
 
 void HorizontalLayout::configureElemets()
@@ -28,7 +34,7 @@ void HorizontalLayout::configureElemets()
     if(mGuiElements.empty()) return;
 
     auto it = mGuiElements.begin();
-    (*it)->setGlobalPosition(getGlobalPosition());
+    (*it)->setGlobalPosition(GuiElement::getGlobalPosition());
     ++it;
     for(; it != mGuiElements.end(); ++it)
     {
@@ -40,6 +46,34 @@ void HorizontalLayout::configureElemets()
             }
         );
     }
+}
+    
+sf::Vector2f HorizontalLayout::getInitialSize() const
+{
+    if (mGuiElements.empty())
+    {
+        return GuiElement::getInitialSize();
+    }
+
+    const auto leftestElement = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
+        return l->getGlobalPosition().x < r->getGlobalPosition().x;
+    });
+
+    return (*leftestElement)->getInitialSize();
+}
+
+sf::Vector2f HorizontalLayout::getGlobalPosition() const
+{
+    if (mGuiElements.empty())
+    {
+        return GuiElement::getGlobalPosition();
+    }
+
+    const auto maxHeightElem = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
+        return l->getGlobalPosition().x < r->getGlobalPosition().x;
+    });
+
+    return (*maxHeightElem)->getGlobalPosition();
 }
 
 

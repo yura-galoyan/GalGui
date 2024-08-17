@@ -27,7 +27,7 @@ public:
     };
 
 public:
-    Button(sf::Vector2f n_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f n_InitialSize = sf::Vector2f{100,50});
+    Button(sf::Vector2f n_GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f n_InitialSize = sf::Vector2f{50,20});
     virtual ~Button() = default;
 
     Button(const Button& button);

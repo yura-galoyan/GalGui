@@ -8,7 +8,8 @@ namespace GalGui {
 
 namespace Widget{
 
-Layout::Layout()
+Layout::Layout(Layout* pParent)
+    : GuiElement(pParent)
 {
 
 }

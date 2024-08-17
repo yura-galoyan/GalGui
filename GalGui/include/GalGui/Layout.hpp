@@ -4,6 +4,9 @@
 
 #include <Galgui/GuiElement.hpp>
 
+class VerticalLayout;
+class HorizontalLayout;
+
 namespace GalGui {
 
 namespace Widget{
@@ -13,7 +16,9 @@ namespace Widget{
 class Layout : public GuiElement
 {
 public:
-    Layout();
+    Layout(Layout* pParent = nullptr);
+
+    virtual ~Layout(){ };
 
     /// @brief add element to layout
     virtual void addChild(GuiElement* pGuiElement) = 0;
@@ -23,7 +28,7 @@ public:
 
     /// @brief calls base class setGlobalPosition, then configures child elememnts
     /// @param n_pos 
-    virtual void setGlobalPosition( sf::Vector2f n_pos);
+    virtual void setGlobalPosition( sf::Vector2f n_pos) override;
 
     /// @brief Calls base class draw function, and draws all child gui elements
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -37,7 +42,11 @@ public:
     
     float getSpacing() const;
 
-private:
+public:
+    friend class VerticalLayout;
+    friend class HorizontalLayout;
+
+public:
     /// @brief Change positions of all gui elements to keep alignment
     virtual void configureElemets() = 0;
 
@@ -46,7 +55,6 @@ protected:
 
 private:
     float mSpacing;
-
 };
 
 }

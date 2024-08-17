@@ -1,4 +1,5 @@
 #include <GalGui/VerticalLayout.hpp>
+#include <cassert>
 
 namespace GalGui {
 
@@ -14,10 +15,21 @@ void VerticalLayout::addChild(GuiElement *pGuiElement)
     }
     auto last = mGuiElements.back();
     mGuiElements.push_back(pGuiElement);
+    pGuiElement->setParent(this);
     pGuiElement->setGlobalPosition({
         last->getGlobalPosition().x ,
         last->getGlobalPosition().y + last->getInitialSize().y  + getSpacing()
     });
+
+    if(!getParent())
+    {
+        std::cout << "parent is nullptr" << std::endl;
+        return;
+    }
+    
+
+    getParent()->configureElemets();
+
 }
 
 void VerticalLayout::configureElemets()
@@ -26,7 +38,7 @@ void VerticalLayout::configureElemets()
     if(mGuiElements.empty()) return;
 
     auto it = mGuiElements.begin();
-    (*it)->setGlobalPosition(getGlobalPosition());
+    (*it)->setGlobalPosition(GuiElement::getGlobalPosition());
     ++it;
     for(; it != mGuiElements.end(); ++it)
     {
@@ -38,6 +50,34 @@ void VerticalLayout::configureElemets()
             }
         );
     }
+}
+    
+sf::Vector2f VerticalLayout::getInitialSize() const
+{
+    if (mGuiElements.empty())
+    {
+        return GuiElement::getInitialSize();
+    }
+
+    auto lowest = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
+        return l->getInitialSize().y < r->getInitialSize().y;
+    });
+
+    return (*lowest)->getInitialSize();
+}
+
+sf::Vector2f VerticalLayout::getGlobalPosition() const
+{
+    if (mGuiElements.empty())
+    {
+        return GuiElement::getGlobalPosition();
+    }
+
+    auto maxHeightElem = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
+        return l->getInitialSize().y < r->getInitialSize().y;
+    });
+
+    return (*maxHeightElem)->getGlobalPosition();
 }
 
 

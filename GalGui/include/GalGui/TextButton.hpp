@@ -12,7 +12,7 @@ namespace Widget {
 class TextButton : public Button 
 {
 public:
-    TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
+    TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{50,20});
 
     TextButton(const TextButton& other);
 

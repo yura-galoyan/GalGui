@@ -27,7 +27,6 @@ int main()
     GalGui::Widget::VerticalLayout vLayout;
     GalGui::Widget::HorizontalLayout hLayout;
 
-    vLayout.setGlobalPosition({ 100,200 });
     vLayout.setSpacing(10);
     hLayout.setGlobalPosition({ 10,20 });
     hLayout.setSpacing(10);

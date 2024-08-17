@@ -17,6 +17,7 @@ namespace GalGui {
 namespace Widget{
 
 class Label;
+class Layout;
 
 inline namespace Detail{
 
@@ -34,32 +35,33 @@ public:
     GuiElement() = default;
     GuiElement(sf::Vector2f globalPosition, sf::Vector2f initialSize);
     GuiElement(const GuiElement& other);
+    GuiElement(Layout* pParent);
 
     void setElementName(const std::string& elementName);
 
     std::string getElementName() const;
 
-    //virtual destructor
+    ///virtual destructor
     virtual ~GuiElement();
 
     /// @brief override this function in derived classes, but call it in the first line of that function
     virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
 
-    // override this function to implement view of element
+    /// override this function to implement view of element
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0 ;
 
-    // get functions
-    virtual const sf::Vector2f&  getGlobalPosition() const ;
-    virtual const sf::Vector2f&  getInitialSize() const;
+    /// get functions
+    virtual sf::Vector2f getGlobalPosition() const ;
+    virtual sf::Vector2f getInitialSize() const;
 
-    // set functions
+    /// set functions
     virtual void setGlobalPosition( sf::Vector2f n_pos);
     virtual void setInitialSize( sf::Vector2f n_size);
 
     /// By default stretch is disabled, if stretch is enabled elements may not work correctly
     static void setStretch(bool bEnabled);
 
-    // show/hide
+    /// show/hide
     void show();
     void hide();
 
@@ -67,6 +69,9 @@ public:
     void setLabelAlignment(LabelAlignment alignment);
     std::string getLabelText();
 
+    Layout* getParent() const;
+    
+    void setParent(Layout* pParent);
 
 protected:
     bool getIsVisible() const;
@@ -82,6 +87,7 @@ private:
     inline static bool m_bIsEnabled{false};
 
     std::string mElementName;
+    Layout* mParent;
 };
 
 }

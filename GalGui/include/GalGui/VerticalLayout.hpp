@@ -10,14 +10,20 @@ namespace Widget{
 class VerticalLayout : public Layout
 {
 public:
-    
+    VerticalLayout(Layout* pParent = nullptr)
+        : Layout(pParent)
+    { }
+
     /// @brief add element to layout
     void addChild(GuiElement* pGuiElement) override;
+    
+    sf::Vector2f getInitialSize() const override;
 
-private:
+    sf::Vector2f getGlobalPosition() const override;
+
+protected:
     /// @brief Change positions of all gui elements to keep alignment
     void configureElemets() override;
-
 };
 
 }

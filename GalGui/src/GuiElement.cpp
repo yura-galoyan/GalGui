@@ -1,6 +1,8 @@
 #include <GalGui/GuiElement.hpp>
 
 #include <GalGui/Label.hpp>
+#include <GalGui/Layout.hpp>
+#include "GalGui/GuiElement.hpp"
 
 namespace GalGui {
 
@@ -39,6 +41,10 @@ GuiElement::GuiElement(const GuiElement &other)
     }
     
 }
+
+Detail::GuiElement::GuiElement(Layout *pParent)
+    : mParent{pParent}
+{ }
 
 Detail::GuiElement::~GuiElement()
 {
@@ -87,12 +93,12 @@ std::string GuiElement::getLabelText()
     return m_pLabel->getText();
 }
 
-const sf::Vector2f& GuiElement::getGlobalPosition() const
+sf::Vector2f GuiElement::getGlobalPosition() const
 {
     return m_rectangle.getPosition(); 
 }
 
-const sf::Vector2f&  GuiElement::getInitialSize() const
+sf::Vector2f GuiElement::getInitialSize() const
 {
     return m_rectangle.getSize(); 
 }
@@ -160,6 +166,16 @@ void GuiElement::hide()
 bool GuiElement::getIsVisible() const
 {
     return m_bIsVisible;
+}
+
+Layout* GuiElement::getParent() const
+{
+    return mParent;
+}
+    
+void GuiElement::setParent(Layout* pParent)
+{
+    mParent = pParent; 
 }
 
 }
