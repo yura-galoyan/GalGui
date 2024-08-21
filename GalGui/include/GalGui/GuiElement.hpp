@@ -3,14 +3,17 @@
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include <memory>
 #include <iostream>
 #include <functional>
 
+namespace sf
+{
+    class RenderWindow;
+    class RenderTarget;
+}
 
 namespace GalGui {
 
@@ -18,6 +21,12 @@ namespace Widget{
 
 class Label;
 class Layout;
+
+enum class ElementType
+{
+    Button, CheckBox, GuiElement, HorizontalLayout,
+    Label, VerticalLayout, TextButton, Slider, Frame
+};
 
 inline namespace Detail{
 
@@ -69,9 +78,11 @@ public:
     void setLabelAlignment(LabelAlignment alignment);
     std::string getLabelText();
 
-    Layout* getParent() const;
-    
-    void setParent(Layout* pParent);
+    virtual Layout* getParent() const;    
+    virtual void setParent(Layout* pParent);
+
+    void setType(ElementType type);
+    ElementType getType() const;
 
 protected:
     bool getIsVisible() const;
@@ -87,6 +98,7 @@ private:
     inline static bool m_bIsEnabled{false};
 
     std::string mElementName;
+    ElementType mType;
     Layout* mParent;
 };
 

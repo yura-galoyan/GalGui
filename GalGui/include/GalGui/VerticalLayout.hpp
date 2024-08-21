@@ -12,7 +12,9 @@ class VerticalLayout : public Layout
 public:
     VerticalLayout(Layout* pParent = nullptr)
         : Layout(pParent)
-    { }
+    {
+        setType(ElementType::VerticalLayout);
+    }
 
     /// @brief add element to layout
     void addChild(GuiElement* pGuiElement) override;

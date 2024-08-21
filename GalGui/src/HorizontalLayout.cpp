@@ -1,6 +1,8 @@
 #include <GalGui/HorizontalLayout.hpp>
 #include <GalGui/VerticalLayout.hpp>
 
+#include <numeric>
+
 namespace GalGui {
 
 namespace Widget{
@@ -22,10 +24,12 @@ void HorizontalLayout::addChild(GuiElement *pGuiElement)
         });    
 
     if(!getParent())
+    {
+        std::cout << "horizontal emptry parent" << std::endl;
         return;
+    }
     
     getParent()->configureElemets();
-
 }
 
 void HorizontalLayout::configureElemets()
@@ -50,30 +54,27 @@ void HorizontalLayout::configureElemets()
     
 sf::Vector2f HorizontalLayout::getInitialSize() const
 {
-    if (mGuiElements.empty())
-    {
-        return GuiElement::getInitialSize();
-    }
 
-    const auto leftestElement = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
-        return l->getGlobalPosition().x < r->getGlobalPosition().x;
+    float sizeX = std::accumulate(mGuiElements.begin(), mGuiElements.end(), 0, [](int l, auto& r){
+        return l + r->getInitialSize().x;
     });
 
-    return (*leftestElement)->getInitialSize();
+    sizeX += ( mGuiElements.size() - 1 ) * getSpacing();
+    
+    auto maxYelement = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](auto& l, auto& r){
+        return l->getInitialSize().y < r->getInitialSize().y;
+    });
+
+    float sizeY = (*maxYelement)->getInitialSize().y;
+
+    std::cout << "HorizontalLayout::getInitialSize" << sizeX << " " << sizeY << std::endl;
+
+    return sf::Vector2f{sizeX, sizeY};
 }
 
 sf::Vector2f HorizontalLayout::getGlobalPosition() const
 {
-    if (mGuiElements.empty())
-    {
-        return GuiElement::getGlobalPosition();
-    }
-
-    const auto maxHeightElem = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](const auto& l, const auto &r){
-        return l->getGlobalPosition().x < r->getGlobalPosition().x;
-    });
-
-    return (*maxHeightElem)->getGlobalPosition();
+    return GuiElement::getGlobalPosition();
 }
 
 

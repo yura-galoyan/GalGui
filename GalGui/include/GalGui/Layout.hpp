@@ -42,6 +42,12 @@ public:
     
     float getSpacing() const;
 
+protected:
+    /// @brief Find Element that has Biggest Y coordianhte
+    GuiElement* getLowestElement() const;
+    /// @brief Find Element that has Biggest X coordianhte
+    GuiElement* getRightestElement() const;
+
 public:
     friend class VerticalLayout;
     friend class HorizontalLayout;

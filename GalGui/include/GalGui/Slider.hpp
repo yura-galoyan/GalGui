@@ -1,5 +1,4 @@
-#ifndef GALGUI_SLIDER_HPP
-#define GALGUI_SLIDER_HPP
+#pragma once
 
 #include "GuiElement.hpp"
 
@@ -101,5 +100,3 @@ private:
 }
 
 }
-
-#endif //GALGUI_SLIDER_HPP

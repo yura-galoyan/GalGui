@@ -12,7 +12,9 @@ class HorizontalLayout : public Layout
 public:
     HorizontalLayout(Layout* pParent = nullptr)
         : Layout(pParent)
-    { }
+    {
+        setType(ElementType::HorizontalLayout);
+    }
 
     /// @brief add element to layout
     void addChild(GuiElement* pGuiElement) override;

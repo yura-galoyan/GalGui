@@ -4,6 +4,9 @@
 
 #include <Galgui/Layout.hpp>
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace GalGui {
 
 namespace Widget{
@@ -49,6 +52,26 @@ void Layout::update(sf::RenderWindow& window, sf::Event& event)
     {
         pGuiElement->update(window, event);
     }
+}
+
+
+
+GuiElement* Layout::getLowestElement() const
+{
+    auto lowestElement =  std::max_element(mGuiElements.begin(), mGuiElements.end(), [](GuiElement* l, GuiElement* r){
+        return l->getGlobalPosition().y < r->getGlobalPosition().y;
+    });
+
+    return *lowestElement;
+}
+
+GuiElement* Layout::getRightestElement() const
+{
+    auto rightestElement =  std::max_element(mGuiElements.begin(), mGuiElements.end(), [](GuiElement* l, GuiElement* r){
+        return l->getGlobalPosition().x < r->getGlobalPosition().x;
+    });
+
+    return *rightestElement;
 }
 
 void Layout::setSpacing(float spacing)

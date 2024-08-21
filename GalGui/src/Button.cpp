@@ -1,5 +1,8 @@
 #include <GalGui/Button.hpp>
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace GalGui {
 
 namespace Widget {

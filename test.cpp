@@ -10,6 +10,40 @@
 
 #include <GalGui/HorizontalLayout.hpp>
 #include <GalGui/VerticalLayout.hpp>
+#include <GalGui/Frame.hpp>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
+
+class myWidget : public GalGui::Widget::Frame
+{
+public:
+    myWidget()
+    {
+        draw.setOutlineColor(sf::Color::Red);
+        draw.setOutLineThickness(1);
+
+        erase.setOutlineColor(sf::Color::Yellow);
+        erase.setOutLineThickness(1);
+
+        pick.setOutlineColor(sf::Color::Blue);
+        pick.setOutLineThickness(1);
+        
+
+        setLayout(&hl);
+
+        hl.setSpacing(10);
+        hl.addChild(&draw);
+    }
+
+
+private:
+    GalGui::Widget::HorizontalLayout hl;
+    GalGui::Widget::TextButton draw;
+    GalGui::Widget::TextButton erase;
+    GalGui::Widget::TextButton pick;
+};
 
 int main()
 {
@@ -17,28 +51,17 @@ int main()
     sf::Event event;
     window.setKeyRepeatEnabled(false);
 
-    GalGui::Widget::Button btn1;
-    GalGui::Widget::Button btn2;
-    GalGui::Widget::Slider btn3;
-    GalGui::Widget::Button btn4;
-    GalGui::Widget::Button btn5;
-    GalGui::Widget::Button btn6;
-    
-    GalGui::Widget::VerticalLayout vLayout;
-    GalGui::Widget::HorizontalLayout hLayout;
 
-    vLayout.setSpacing(10);
-    hLayout.setGlobalPosition({ 10,20 });
-    hLayout.setSpacing(10);
+    GalGui::Widget::VerticalLayout vl;
+    vl.setSpacing(10);
 
-    
-    hLayout.addChild(&btn1);
-    hLayout.addChild(&vLayout);
-    hLayout.addChild(&btn3);
+    myWidget wgt1;
+    myWidget wgt2;
+    myWidget wgt3;
 
-    vLayout.addChild(&btn4);
-    vLayout.addChild(&btn5);
-    vLayout.addChild(&btn6);
+    vl.addChild(&wgt1);
+    vl.addChild(&wgt2);
+    vl.addChild(&wgt3);
 
     while(window.isOpen())
     {
@@ -50,13 +73,11 @@ int main()
             }
         }
 
-        vLayout.update(window, event);
-        hLayout.update(window, event);
+        vl.update(window, event);
 
         window.clear();
         
-        window.draw(vLayout);
-        window.draw(hLayout);
+        window.draw(vl);
 
         window.display();
     }

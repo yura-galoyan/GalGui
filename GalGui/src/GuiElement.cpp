@@ -4,6 +4,9 @@
 #include <GalGui/Layout.hpp>
 #include "GalGui/GuiElement.hpp"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace GalGui {
 
 namespace Widget{
@@ -103,6 +106,17 @@ sf::Vector2f GuiElement::getInitialSize() const
     return m_rectangle.getSize(); 
 }
 
+
+void GuiElement::setType(ElementType type)
+{
+    mType = type;
+}
+
+ElementType GuiElement::getType() const
+{
+    return mType;
+}
+
 void GuiElement::setGlobalPosition( sf::Vector2f n_pos) 
 {
     if(m_pLabel)
@@ -129,8 +143,6 @@ void GuiElement::setGlobalPosition( sf::Vector2f n_pos)
 
         }
             break;
-
-
         case LabelAlignment::None:
         {
 

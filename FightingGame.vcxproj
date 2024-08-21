@@ -22,6 +22,7 @@
     <ClInclude Include="GalGui\include\GalGui\Button.hpp" />
     <ClInclude Include="GalGui\include\GalGui\CheckBox.hpp" />
     <ClInclude Include="GalGui\include\GalGui\ComboBox.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\Frame.hpp" />
     <ClInclude Include="GalGui\include\GalGui\GuiElement.hpp" />
     <ClInclude Include="GalGui\include\GalGui\HorizontalLayout.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Label.hpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="GalGui\src\Button.cpp" />
     <ClCompile Include="GalGui\src\CheckBox.cpp" />
     <ClCompile Include="GalGui\src\ComboBox.cpp" />
+    <ClCompile Include="GalGui\src\Frame.cpp" />
     <ClCompile Include="GalGui\src\GuiElement.cpp" />
     <ClCompile Include="GalGui\src\HorizontalLayout.cpp" />
     <ClCompile Include="GalGui\src\Label.cpp">
