@@ -13,7 +13,7 @@ Button::Button(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
     m_rectangle.setOutlineColor(sf::Color{104,104,104 });
     m_ButtonState = State::Idle;
     m_rectangle.setFillColor(getIdleColor());
-    m_rectangle.setOutlineThickness(3);
+    m_rectangle.setOutlineThickness(2);
 }
 
 Button::Button(const Button &other) : GuiElement(other)

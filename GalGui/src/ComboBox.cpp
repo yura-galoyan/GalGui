@@ -10,7 +10,8 @@ namespace Widget {
 ComboBox::ComboBox(const sf::Font *font, sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
     : TextButton("", font, n_GlobalPosition, n_InitialSize)
 {
-    setOutLineThickness(1);
+    setOutLineThickness(2);
+    setType(ElementType::ComboBox);
 }
 
 void ComboBox::append(const std::string &value)
@@ -39,7 +40,7 @@ void ComboBox::setGlobalPosition(sf::Vector2f n_pos)
     unsigned i{0};
     for(auto& value : m_values)
     {
-        value.setGlobalPosition(n_pos + sf::Vector2f( 0, n_pos.y + value.getInitialSize().y * (i++)  ));
+        value.setGlobalPosition(n_pos + sf::Vector2f( 0, value.getInitialSize().y * (++i)  ));
     }
 }
 

@@ -17,7 +17,7 @@ private:
 
 public:
     ComboBox(const sf::Font* font = nullptr,
-             sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{100,50});
+             sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{50,20});
 
     // append value to end of combo box
     void append(const std::string& value);

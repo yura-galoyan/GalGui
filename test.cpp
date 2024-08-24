@@ -35,6 +35,8 @@ public:
 
         hl.setSpacing(10);
         hl.addChild(&draw);
+        hl.addChild(&erase);
+        hl.addChild(&pick);
     }
 
 
@@ -45,23 +47,28 @@ private:
     GalGui::Widget::TextButton pick;
 };
 
+
 int main()
 {
+    namespace GG = GalGui::Widget;
     sf::RenderWindow window(sf::VideoMode{640,640},"button test");
     sf::Event event;
     window.setKeyRepeatEnabled(false);
 
 
-    GalGui::Widget::VerticalLayout vl;
-    vl.setSpacing(10);
+    GG::TextButton txt;
 
-    myWidget wgt1;
-    myWidget wgt2;
-    myWidget wgt3;
+    txt.setGlobalPosition({150,15});
+    txt.setInitialSize({ 200, 80 });
+    sf::Font font;
+    font.loadFromFile("fonts/menu_font.ttf");
+    txt.setFont(&font);
 
-    vl.addChild(&wgt1);
-    vl.addChild(&wgt2);
-    vl.addChild(&wgt3);
+    txt.setText("hello1");
+
+    txt.setCharacterSize(40);
+    txt.setAutoAdjustSize(false);
+
 
     while(window.isOpen())
     {
@@ -73,11 +80,11 @@ int main()
             }
         }
 
-        vl.update(window, event);
+        txt.update(window, event);
 
         window.clear();
         
-        window.draw(vl);
+        window.draw(txt);
 
         window.display();
     }

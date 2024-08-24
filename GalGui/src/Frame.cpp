@@ -28,13 +28,11 @@ void Frame::setLayout(Layout* layout)
     
 sf::Vector2f Frame::getInitialSize() const
 {
-    std::cout << "here sze" << std::endl;
     return mLayout->getInitialSize();
 }
 
 sf::Vector2f Frame::getGlobalPosition() const
 {
-    std::cout << "here " << std::endl;
     return mLayout->getGlobalPosition();
 }
 
@@ -60,6 +58,22 @@ Layout* Frame::getParent() const
 void Frame::setParent(Layout* pParent)
 {
     mLayout->setParent(pParent);
+}
+
+
+/// set functions
+void Frame::setGlobalPosition( sf::Vector2f n_pos)
+{
+    GuiElement::setGlobalPosition(n_pos);
+
+    mLayout->setGlobalPosition(n_pos);
+}
+
+void Frame::setInitialSize( sf::Vector2f n_size)
+{
+    GuiElement::setInitialSize(n_size);
+
+    mLayout->setInitialSize(n_size);
 }
 
 }

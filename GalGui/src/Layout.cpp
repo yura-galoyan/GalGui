@@ -40,6 +40,11 @@ void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for(auto& pGuiElement : mGuiElements)
     {
         target.draw(*pGuiElement, states);
+    }    
+    for(auto& pGuiElement : mGuiElements)
+    {
+        if(pGuiElement->getType() == ElementType::ComboBox)
+            target.draw(*pGuiElement, states);
     }
 }
 

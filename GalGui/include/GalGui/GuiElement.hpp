@@ -24,7 +24,7 @@ class Layout;
 
 enum class ElementType
 {
-    Button, CheckBox, GuiElement, HorizontalLayout,
+    Button, CheckBox, GuiElement, HorizontalLayout, ComboBox,
     Label, VerticalLayout, TextButton, Slider, Frame
 };
 

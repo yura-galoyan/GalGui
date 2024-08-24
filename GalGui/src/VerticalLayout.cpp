@@ -8,7 +8,6 @@ namespace Widget{
 
 void VerticalLayout::addChild(GuiElement *pGuiElement)
 {
-    std::cout << "adding to vertical layout" << std::endl;
     if(mGuiElements.empty())
     {
         mGuiElements.push_back(pGuiElement);
@@ -19,14 +18,14 @@ void VerticalLayout::addChild(GuiElement *pGuiElement)
     auto last = mGuiElements.back();
     mGuiElements.push_back(pGuiElement);
     pGuiElement->setParent(this);
-    pGuiElement->setGlobalPosition({
+  pGuiElement->setGlobalPosition({
         last->getGlobalPosition().x ,
         last->getGlobalPosition().y + last->getInitialSize().y  + getSpacing()
     });
 
+
     if(!getParent())
     {
-        std::cout << "empty parent" << std::endl;
         return;
     }
     

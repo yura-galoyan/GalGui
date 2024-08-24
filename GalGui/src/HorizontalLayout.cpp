@@ -25,8 +25,7 @@ void HorizontalLayout::addChild(GuiElement *pGuiElement)
 
     if(!getParent())
     {
-        std::cout << "horizontal emptry parent" << std::endl;
-        return;
+       return;
     }
     
     getParent()->configureElemets();
@@ -66,8 +65,6 @@ sf::Vector2f HorizontalLayout::getInitialSize() const
     });
 
     float sizeY = (*maxYelement)->getInitialSize().y;
-
-    std::cout << "HorizontalLayout::getInitialSize" << sizeX << " " << sizeY << std::endl;
 
     return sf::Vector2f{sizeX, sizeY};
 }

@@ -23,6 +23,10 @@ public:
     /// @return return position of leftest element 
     sf::Vector2f getGlobalPosition() const override;
 
+    /// set functions
+    void setGlobalPosition( sf::Vector2f n_pos) override;
+    void setInitialSize( sf::Vector2f n_size) override;
+
     /// @brief Calls base class draw function, and draws all child gui elements
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     
