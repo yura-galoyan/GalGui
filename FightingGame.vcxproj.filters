@@ -48,6 +48,9 @@
     <ClInclude Include="GalGui\include\GalGui\Frame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GalGui\include\GalGui\LineEdit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GalGui\src\TextButton.cpp">
@@ -71,9 +74,6 @@
     <ClCompile Include="GalGui\src\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GalGui\src\HorizontalLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +84,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GalGui\src\Frame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GalGui\src\LineEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

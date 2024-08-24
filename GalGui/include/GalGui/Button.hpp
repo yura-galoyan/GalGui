@@ -20,6 +20,7 @@ class Button : public Detail::GuiElement
 public:
     using CallBack_t = std::function<void()>;
     using CallBackVector = std::vector<CallBack_t>;
+    
 public:
     enum class State
     {

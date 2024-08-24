@@ -27,6 +27,7 @@
     <ClInclude Include="GalGui\include\GalGui\HorizontalLayout.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Label.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Layout.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\LineEdit.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Slider.hpp" />
     <ClInclude Include="GalGui\include\GalGui\TextButton.hpp" />
     <ClInclude Include="GalGui\include\GalGui\VerticalLayout.hpp" />
@@ -42,6 +43,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\galoy\Desktop\Development\GalGui\GalGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="GalGui\src\Layout.cpp" />
+    <ClCompile Include="GalGui\src\LineEdit.cpp" />
     <ClCompile Include="GalGui\src\Slider.cpp" />
     <ClCompile Include="GalGui\src\TextButton.cpp" />
     <ClCompile Include="GalGui\src\VerticalLayout.cpp" />

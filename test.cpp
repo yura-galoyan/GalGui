@@ -1,3 +1,4 @@
+
 // define this for iostream usage
 #define CUSTOM_DEBUG
 
@@ -7,6 +8,7 @@
 #include <GalGui/TextButton.hpp>
 #include <GalGui/Label.hpp>
 #include <GalGui/Slider.hpp>
+#include <GalGui/LineEdit.hpp>
 
 #include <GalGui/HorizontalLayout.hpp>
 #include <GalGui/VerticalLayout.hpp>
@@ -53,22 +55,15 @@ int main()
     namespace GG = GalGui::Widget;
     sf::RenderWindow window(sf::VideoMode{640,640},"button test");
     sf::Event event;
-    window.setKeyRepeatEnabled(false);
+    window.setKeyRepeatEnabled(true);
 
-
-    GG::TextButton txt;
-
-    txt.setGlobalPosition({150,15});
-    txt.setInitialSize({ 200, 80 });
+    GG::LineEdit txt;
+    txt.linkToChanged([&txt](){
+        std::cout << txt.getContent() << std::endl;
+    });
     sf::Font font;
     font.loadFromFile("fonts/menu_font.ttf");
     txt.setFont(&font);
-
-    txt.setText("hello1");
-
-    txt.setCharacterSize(40);
-    txt.setAutoAdjustSize(false);
-
 
     while(window.isOpen())
     {
@@ -78,9 +73,10 @@ int main()
             {
                 window.close();
             }
+
+            txt.update(window, event);
         }
 
-        txt.update(window, event);
 
         window.clear();
         

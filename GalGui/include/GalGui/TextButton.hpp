@@ -12,6 +12,12 @@ namespace Widget {
 class TextButton : public Button 
 {
 public:
+    enum class Alignment
+    {
+        Left, Middle, Right
+    };
+
+public:
     TextButton(const std::string& text = "Button", const sf::Font* font = nullptr, sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{50,20});
 
     TextButton(const TextButton& other);
@@ -27,7 +33,7 @@ public:
     void setTextColor(sf::Color);
     void setCharacterSize(unsigned h);
     void setAutoAdjustSize(bool bEnabled);
-
+    void setAlignment(Alignment alignment);
 
     const sf::Font* getFont();
     std::string getText() const;
@@ -40,9 +46,10 @@ public:
     virtual void setInitialSize(sf::Vector2f n_size) override;
 
 private:
-    sf::Text m_text;
+    mutable sf::Text m_text;
     const sf::Font* defFont;
     bool m_bAutoAdjustEnabled{true};
+    Alignment mAlignment{Alignment::Middle};
 };
 
 
