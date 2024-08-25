@@ -30,20 +30,18 @@ Button::Button(const Button &other) : GuiElement(other)
 
 void Button::update(sf::RenderWindow& window, sf::Event& event)
 {
-    if(getIsVisible())
-    {
-        GuiElement::update(window,event);
-        checkState(window, event);
-    }
+    if(!getIsVisible()) return;
+    
+    GuiElement::update(window,event);
+    checkState(window, event);
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(getIsVisible())
-    {
-        GuiElement::draw(target, states);
-        target.draw(m_rectangle);
-    }
+    if(!getIsVisible()) return;
+    
+    GuiElement::draw(target, states);
+    target.draw(m_rectangle);
 }
 
 void Button::checkState(sf::RenderWindow& window, sf::Event& event)

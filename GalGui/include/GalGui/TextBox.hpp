@@ -34,6 +34,7 @@ public:
     void setText(const std::string& string);
     void setTextColor(sf::Color);
     void setCharacterSize(unsigned h);
+    void setOutlineColor(sf::Color newColor);
     
     const sf::Font* getFont();
     std::string getText() const;

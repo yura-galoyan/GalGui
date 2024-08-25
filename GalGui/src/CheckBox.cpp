@@ -22,21 +22,19 @@ CheckBox::CheckBox(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
 
 void CheckBox::update(sf::RenderWindow& window, sf::Event& event)
 {
-    if(getIsVisible())
-    {
-        GuiElement::update(window,event);
-        checkState(window, event);
-    }
+    if(!getIsVisible()) return;
+
+    GuiElement::update(window,event);
+    checkState(window, event);
 }
 
 void CheckBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(getIsVisible())
-    {
-        GuiElement::draw(target, states);
-        target.draw(m_rectangle);
-        if( m_CheckBoxState == State::Checked  ) target.draw(m_flag);
-    }
+    if(!getIsVisible()) return;
+        
+    GuiElement::draw(target, states);
+    target.draw(m_rectangle);
+    if( m_CheckBoxState == State::Checked  ) target.draw(m_flag);
 }
 
 void CheckBox::checkState(sf::RenderWindow& window, sf::Event& event)

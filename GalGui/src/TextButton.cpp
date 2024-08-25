@@ -37,11 +37,10 @@ TextButton& TextButton::operator=(TextButton other)
 
 void TextButton::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if(getIsVisible())
-    {
-        Button::draw(target,states);
-        target.draw(m_text);
-    }
+    if(!getIsVisible()) return;
+
+    Button::draw(target,states);
+    target.draw(m_text);
 }
 
 void TextButton::setFont(const sf::Font* font)

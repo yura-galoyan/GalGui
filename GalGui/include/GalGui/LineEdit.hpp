@@ -2,11 +2,8 @@
 
 #include <GalGui/TextButton.hpp>
 
-#include <SFML/System/Clock.hpp>
-
 namespace GalGui::Widget
 {
-
 
 class LineEdit : public TextButton
 {
@@ -18,12 +15,13 @@ public:
     void update(sf::RenderWindow& window, sf::Event& event) override;
 
     void setInitialSize(sf::Vector2f n_size) override;
-    void clear();
+    void setInputMode(bool bEnabled);
     
     void linkToChanged(CallBack_t cb);
     void linkToEntered(CallBack_t cb);
 
     std::string getContent() const;
+    void clear();
 
 private:
     void onTextChanged();
@@ -31,20 +29,11 @@ private:
 
 private:
     bool bInputMode{false};
-
     std::string m_sBackupText;
-
-private:
-    mutable sf::Clock blinkClock;
-    bool bShowCursor{false};
-    mutable bool bBlink{false};
     std::string nexText;
-
     CallBackVector mCallBacksTextChanged;
     CallBackVector mCallBacksTextEntered;
 };
-
-
 
 }
 

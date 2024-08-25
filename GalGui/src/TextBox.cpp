@@ -10,6 +10,7 @@ TextBox::TextBox(sf::Vector2f n_Position, sf::Vector2f n_Size)
     :GuiElement(n_Position, n_Size)
 {
     showOutline();
+    setOutlineColor(sf::Color{104,104,104});
     setCharacterSize(12);
 }
 
@@ -43,6 +44,11 @@ void TextBox::setGlobalPosition( sf::Vector2f n_pos)
              gPos.y + gSize.y - mContentVector[i].getCharacterSize() * (mContentVector.size() - i)  } );
         }
     }
+}
+
+void TextBox::setOutlineColor(sf::Color newColor)
+{
+    m_rectangle.setOutlineColor(newColor);
 }
 
 void TextBox::appendText(std::string mNewText)

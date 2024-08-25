@@ -39,6 +39,8 @@ sf::Vector2f Frame::getGlobalPosition() const
 /// @brief Calls base class draw function, and draws all child gui elements
 void Frame::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    if(!getIsVisible()) return;
+
     target.draw(*mLayout, states);
 }
     
@@ -47,6 +49,8 @@ void Frame::draw(sf::RenderTarget& target, sf::RenderStates states) const
 /// @param event Pass here event object
 void Frame::update(sf::RenderWindow& window, sf::Event& event)
 {
+    if(!getIsVisible()) return;
+    
     mLayout->update(window, event);
 }
 

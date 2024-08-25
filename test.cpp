@@ -21,6 +21,7 @@
 
 #include <iomanip>
 
+namespace GG = GalGui::Widget;
 
 class myWidget : public GalGui::Widget::Frame
 {
@@ -53,43 +54,52 @@ private:
     GalGui::Widget::TextButton pick;
 };
 
+class CommandPane : public GG::Frame
+{
+public:
+    CommandPane(GG::Layout* parent = nullptr)
+        : GG::Frame( parent )
+    {
+        
+        font.loadFromFile("fonts/menu_font.ttf");
+        vLayout.addChild(&box);
+        vLayout.addChild(&lineEdit);
+        vLayout.setSpacing(20);
+
+        setLayout(&vLayout);
+        box.setFont(&font);
+        box.setCharacterSize(36);
+        box.setTextColor(sf::Color::White);
+        lineEdit.setFont(&font);
+        lineEdit.linkToEntered([this](){
+            box.appendText(lineEdit.getContent());
+            lineEdit.clear();
+        });
+
+    }
+
+private:
+    sf::Font font;
+    GG::LineEdit lineEdit;
+    GG::VerticalLayout vLayout;
+    GG::TextBox box;
+};
 
 int main()
 {
-    namespace GG = GalGui::Widget;
     sf::RenderWindow window(sf::VideoMode{1600,900},"button test");
     sf::Event event;
     window.setKeyRepeatEnabled(true);
 
-    GG::LineEdit lineEdit;
-
-    sf::Font font;
-    font.loadFromFile("fonts/menu_font.ttf");
-
-    GG::VerticalLayout vLayout;
-
-    GG::TextBox box;
 
 
-    vLayout.addChild(&box);
-    vLayout.addChild(&lineEdit);
 
-    vLayout.setSpacing(20);
+    CommandPane pane;
 
-    vLayout.setGlobalPosition({150,150});;
-    
-    box.setFont(&font);
-    box.setCharacterSize(36);
-    box.setTextColor(sf::Color::White);
+    pane.setGlobalPosition({50,300});
 
-    lineEdit.setFont(&font);
-    lineEdit.linkToEntered([&lineEdit, &box](){
-        std::cout << " lineEdit.getContent().size() : " << lineEdit.getContent().size() << std::endl;
-        std::cout << "appending " << std::quoted(lineEdit.getContent()) << std::endl; 
-        box.appendText(lineEdit.getContent());
-        lineEdit.clear();
-    });
 
+    pane.hide();
 
     while(window.isOpen())
     {
@@ -99,14 +109,25 @@ int main()
             {
                 window.close();
             }
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(event.key.code == sf::Keyboard::Tilde)
+                {
+                    pane.show();
+                }
+                if(event.key.code == sf::Keyboard::Escape)
+                {
+                    pane.hide();
+                }
+            }
 
-            vLayout.update(window, event);
+            pane.update(window, event);
         }
 
 
         window.clear();
         
-        window.draw(vLayout);
+        window.draw(pane);
 
         window.display();
     }

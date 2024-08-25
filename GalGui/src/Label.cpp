@@ -33,22 +33,20 @@ Label::Label(const Label& other) : GuiElement(other)
 
 void Label::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    if(getIsVisible())
+    if(!getIsVisible()) return;
+    
+    if(m_bShowOutline)
     {
-        if(m_bShowOutline)
-        {
-            target.draw(m_rectangle);
-        }
-        target.draw(m_text);
+        target.draw(m_rectangle);
     }
+    target.draw(m_text);
 }
 
 void Label::update(sf::RenderWindow &window, sf::Event &event)
 {
-    if(getIsVisible())
-    {
-        GuiElement::update(window,event);
-    }
+    if(!getIsVisible()) return;
+    
+    GuiElement::update(window,event);
 }
 
 void Label::setFont(const sf::Font *font)

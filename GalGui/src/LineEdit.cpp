@@ -11,11 +11,7 @@ LineEdit::LineEdit(const std::string& text, const sf::Font* font, sf::Vector2f n
     
     linkToClicked([this](){
         if(bInputMode) return;
-        bInputMode = true;
-        m_sBackupText = getText();
-        setOutlineColor(sf::Color::Yellow);
-        nexText.clear();
-        setText("|");
+        setInputMode(true);
     });
 
     setAutoAdjustSize(true);
@@ -29,8 +25,26 @@ void LineEdit::clear()
     setText(nexText);
 }
 
+void LineEdit::setInputMode(bool bEnabled)
+{
+    bInputMode = bEnabled;
+    if(bInputMode)
+    {
+        m_sBackupText = getText();
+        setOutlineColor(sf::Color::Yellow);
+        nexText.clear();
+        setText("|");
+    }
+    else
+    {
+        setOutlineColor(sf::Color{104,104,104});
+    }
+}
+
 void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
 {
+    if(!getIsVisible()) return;
+    
     Button::update(window,event);
     if(bInputMode)
     {
@@ -70,9 +84,7 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
             if(event.key.code == sf::Keyboard::Escape)
             {
                 setText(m_sBackupText);
-
-                bInputMode = false;
-                setOutlineColor(sf::Color{104,104,104});
+                setInputMode(false);
             }
             if(event.key.code == sf::Keyboard::Enter)
             {
@@ -107,17 +119,13 @@ void LineEdit::linkToEntered(CallBack_t cb)
 void LineEdit::onTextChanged()
 {
     for(auto& cb : mCallBacksTextChanged)
-    {
         cb();
-    }
 }
 
 void LineEdit::onTextEntered()
 {
     for(auto& cb : mCallBacksTextEntered)
-    {
         cb();
-    }
 }
 
 }

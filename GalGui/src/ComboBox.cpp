@@ -76,47 +76,46 @@ std::string ComboBox::getCurrentText() const
 // override this function to implement logic of element
 void ComboBox::update(sf::RenderWindow& window, sf::Event& event)
 {
-    if(getIsVisible())
+    if(!getIsVisible()) return;
+
+    Button::update(window,event);
+    auto pos = getGlobalPosition();
+    auto size = getInitialSize();
+    auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
+    // mousePos = window.mapCoordsToPixel(static_cast<sf::Vector2f(mousePos));
+    auto isOnComboBox = [=]() -> bool {
+        return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
+               mousePos.y > pos.y && mousePos.y < pos.y + size.y;
+    };
+    if(event.type == sf::Event::MouseButtonPressed)
     {
-        Button::update(window,event);
-        auto pos = getGlobalPosition();
-        auto size = getInitialSize();
-        auto mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getDefaultView());
-        // mousePos = window.mapCoordsToPixel(static_cast<sf::Vector2f(mousePos));
-        auto isOnComboBox = [=]() -> bool {
-            return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
-                   mousePos.y > pos.y && mousePos.y < pos.y + size.y;
-        };
-        if(event.type == sf::Event::MouseButtonPressed)
+        if(event.mouseButton.button == sf::Mouse::Left)
         {
-            if(event.mouseButton.button == sf::Mouse::Left)
+            if(isOnComboBox())
             {
-                if(isOnComboBox())
-                {
-                    starting = true;
-                }        
-            }
+                starting = true;
+            }        
         }
-        if(event.type == sf::Event::MouseButtonReleased)
+    }
+    if(event.type == sf::Event::MouseButtonReleased)
+    {
+        if(event.mouseButton.button == sf::Mouse::Left)
         {
-            if(event.mouseButton.button == sf::Mouse::Left)
+            if(isOnComboBox())
             {
-                if(isOnComboBox())
+                if(starting)
                 {
-                    if(starting)
-                    {
-                        m_bIsPressed = !m_bIsPressed;
-                        starting = false;
-                    }
-                }  
-            }
+                    m_bIsPressed = !m_bIsPressed;
+                    starting = false;
+                }
+            }  
         }
-        if(m_bIsPressed)
+    }
+    if(m_bIsPressed)
+    {
+        for(auto& val : m_values)
         {
-            for(auto& val : m_values)
-            {
-                val.update(window,event);
-            }
+            val.update(window,event);
         }
     }
 }
@@ -124,16 +123,14 @@ void ComboBox::update(sf::RenderWindow& window, sf::Event& event)
 // override this function to implement view of element
 void ComboBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(getIsVisible())
-    {
-        TextButton::draw(target, states);
+    if(!getIsVisible()) return;
 
-        if(m_bIsPressed)
+    TextButton::draw(target, states);
+    if(m_bIsPressed)
+    {
+        for(const auto& val : m_values)
         {
-            for(const auto& val : m_values)
-            {
-                val.draw(target, states);
-            }
+            val.draw(target, states);
         }
     }
 }

@@ -64,22 +64,23 @@ Detail::GuiElement::~GuiElement()
 
 void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
 {
-    if(getIsVisible())
+    if(!getIsVisible()) return;
+
+    if(event.type == sf::Event::Resized)
     {
-        if(event.type == sf::Event::Resized)
+        if(!m_bIsEnabled)
         {
-            if(!m_bIsEnabled)
-            {
-                // update the view to the new size of the window
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                window.setView(sf::View(visibleArea));
-            }
+            // update the view to the new size of the window
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            window.setView(sf::View(visibleArea));
         }
     }
 }
 
 void GuiElement::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    if(!getIsVisible()) return;
+
     if(m_pLabel) target.draw(*m_pLabel, states);
 }
 

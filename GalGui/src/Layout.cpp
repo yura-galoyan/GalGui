@@ -35,6 +35,8 @@ void Layout::setGlobalPosition( sf::Vector2f n_pos)
 
 void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    if(!getIsVisible()) return;
+    
     GuiElement::draw(target, states);
 
     for(auto& pGuiElement : mGuiElements)
@@ -51,6 +53,8 @@ void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 /// @brief override this function in derived classes, but call it in the first line of that function
 void Layout::update(sf::RenderWindow& window, sf::Event& event) 
 {
+    if(!getIsVisible()) return;
+    
     GuiElement::update(window, event);
 
     for(auto& pGuiElement : mGuiElements)
