@@ -23,6 +23,12 @@ LineEdit::LineEdit(const std::string& text, const sf::Font* font, sf::Vector2f n
 
 }
 
+void LineEdit::clear()
+{
+    nexText.clear();
+    setText(nexText);
+}
+
 void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
 {
     Button::update(window,event);
@@ -30,14 +36,33 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
     {
         if(event.type == sf::Event::TextEntered)
         {
-            if(event.text.unicode != '\b')
-                nexText.append(sf::String(event.text.unicode).toAnsiString());
-            else
-            {   
-                if(nexText.size())
-                    nexText.pop_back();
+            switch (event.text.unicode)
+            {
+            case '\b':
+                {
+                    // delete last character
+                    if(nexText.size())
+                        nexText.pop_back();
+                }
+                break;
+            case '\n':
+                {
+                    // skip
+                }
+                break;
+            case '\r':
+                {
+                    // skip
+                }
+                break;
+            default:
+                {
+                    // insert character
+                    nexText.append(sf::String(event.text.unicode).toAnsiString());
+                }
+                break;
             }
-            setText(nexText + "_");
+            setText(nexText);
             onTextChanged();
         }
         if(event.type == sf::Event::KeyPressed)
@@ -51,17 +76,19 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
             }
             if(event.key.code == sf::Keyboard::Enter)
             {
-                setText(nexText);
                 onTextEntered();
-
-                bInputMode = false;
-                setOutlineColor(sf::Color{104,104,104});
             }
         }
 
     }
 }
 
+void LineEdit::setInitialSize(sf::Vector2f n_size)
+{
+    TextButton::setInitialSize(n_size);
+    setCharacterSize(n_size.y/2);
+}
+    
 std::string LineEdit::getContent() const
 {
     return nexText;

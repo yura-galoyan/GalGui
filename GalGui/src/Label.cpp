@@ -80,7 +80,7 @@ void Label::setGlobalPosition(sf::Vector2f n_pos)
 void Label::setInitialSize(sf::Vector2f n_size)
 {
     GuiElement::setInitialSize(n_size);
-    setCharacterSize( n_size.y - 5  );
+    setCharacterSize( n_size.y);
     m_text.setPosition( getGlobalPosition() );
     setAlignment(getAlignment());
 }
@@ -117,7 +117,6 @@ void Label::hideOutline()
     m_rectangle.setOutlineThickness(0);
 }
 
-
 void Label::setAlignment(Alignment alignment)
 {
     m_alignment = alignment;
@@ -130,7 +129,6 @@ void Label::setAlignment(Alignment alignment)
     case Alignment::Left:
     {
         m_text.setPosition(rectPos);
-        
     }
         break;
     case Alignment::Right:
@@ -146,9 +144,6 @@ void Label::setAlignment(Alignment alignment)
     default:
         break;
     }
-
-
-
 }
 
 Label::Alignment Label::getAlignment()

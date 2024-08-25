@@ -9,6 +9,7 @@
 #include <GalGui/Label.hpp>
 #include <GalGui/Slider.hpp>
 #include <GalGui/LineEdit.hpp>
+#include <GalGui/TextBox.hpp>
 
 #include <GalGui/HorizontalLayout.hpp>
 #include <GalGui/VerticalLayout.hpp>
@@ -16,6 +17,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+
+
+#include <iomanip>
 
 
 class myWidget : public GalGui::Widget::Frame
@@ -53,17 +57,39 @@ private:
 int main()
 {
     namespace GG = GalGui::Widget;
-    sf::RenderWindow window(sf::VideoMode{640,640},"button test");
+    sf::RenderWindow window(sf::VideoMode{1600,900},"button test");
     sf::Event event;
     window.setKeyRepeatEnabled(true);
 
-    GG::LineEdit txt;
-    txt.linkToChanged([&txt](){
-        std::cout << txt.getContent() << std::endl;
-    });
+    GG::LineEdit lineEdit;
+
     sf::Font font;
     font.loadFromFile("fonts/menu_font.ttf");
-    txt.setFont(&font);
+
+    GG::VerticalLayout vLayout;
+
+    GG::TextBox box;
+
+
+    vLayout.addChild(&box);
+    vLayout.addChild(&lineEdit);
+
+    vLayout.setSpacing(20);
+
+    vLayout.setGlobalPosition({150,150});;
+    
+    box.setFont(&font);
+    box.setCharacterSize(36);
+    box.setTextColor(sf::Color::White);
+
+    lineEdit.setFont(&font);
+    lineEdit.linkToEntered([&lineEdit, &box](){
+        std::cout << " lineEdit.getContent().size() : " << lineEdit.getContent().size() << std::endl;
+        std::cout << "appending " << std::quoted(lineEdit.getContent()) << std::endl; 
+        box.appendText(lineEdit.getContent());
+        lineEdit.clear();
+    });
+
 
     while(window.isOpen())
     {
@@ -74,13 +100,13 @@ int main()
                 window.close();
             }
 
-            txt.update(window, event);
+            vLayout.update(window, event);
         }
 
 
         window.clear();
         
-        window.draw(txt);
+        window.draw(vLayout);
 
         window.display();
     }

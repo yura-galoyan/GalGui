@@ -82,6 +82,7 @@ GuiElement* Layout::getRightestElement() const
 void Layout::setSpacing(float spacing)
 {
     mSpacing = spacing;
+    configureElemets();
 }
     
 float Layout::getSpacing() const

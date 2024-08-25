@@ -11,12 +11,15 @@ namespace GalGui::Widget
 class LineEdit : public TextButton
 {
 public:
-    LineEdit(const std::string& text = "Button", const sf::Font* font = nullptr,
-     sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{600,100});
+    LineEdit(const std::string& text = "", const sf::Font* font = nullptr,
+     sf::Vector2f GlobalPosition = sf::Vector2f{10,10}, sf::Vector2f InitialSize = sf::Vector2f{300,30});
 
     // override this function to implement logic of element
-    virtual void update(sf::RenderWindow& window, sf::Event& event) override;
+    void update(sf::RenderWindow& window, sf::Event& event) override;
 
+    void setInitialSize(sf::Vector2f n_size) override;
+    void clear();
+    
     void linkToChanged(CallBack_t cb);
     void linkToEntered(CallBack_t cb);
 

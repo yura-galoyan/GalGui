@@ -88,24 +88,24 @@ void TextButton::setInitialSize(sf::Vector2f n_size)
     if(m_bAutoAdjustEnabled)
     {
         Button::setInitialSize(n_size);
-        setCharacterSize( n_size.y < n_size.x ? n_size.y / 3 : n_size.x / 5  );
+        setCharacterSize( n_size.y < n_size.x ? n_size.y / 2 : n_size.x / 5  );
         switch (mAlignment)
         {
         case Alignment::Middle:
             {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 3  }  );
+                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 5  }  );
             }
             break;
         
         case Alignment::Left:
             {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ 1  , n_size.y / 3  }  );
+                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ 1  , n_size.y / 5  }  );
             }
             break;
             
         case Alignment::Right:
             {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)  , n_size.y / 3  }  );
+                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)  , n_size.y / 5  }  );
             }
             break;
         default:

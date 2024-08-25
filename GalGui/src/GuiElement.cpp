@@ -19,6 +19,11 @@ GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
     m_rectangle.setOutlineColor(sf::Color::Green);
 }
 
+GuiElement::GuiElement()
+{
+    m_rectangle.setFillColor(sf::Color::Transparent);
+    m_rectangle.setOutlineColor(sf::Color::Green);
+}
 void GuiElement::setElementName(const std::string& elementName)
 {
     mElementName = elementName;
@@ -178,6 +183,11 @@ void GuiElement::hide()
 bool GuiElement::getIsVisible() const
 {
     return m_bIsVisible;
+}
+
+void Detail::GuiElement::refresh()
+{
+    setGlobalPosition(getGlobalPosition());
 }
 
 Layout* GuiElement::getParent() const

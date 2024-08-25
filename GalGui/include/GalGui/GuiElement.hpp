@@ -41,7 +41,7 @@ public:
     };
 
 public:
-    GuiElement() = default;
+    GuiElement();
     GuiElement(sf::Vector2f globalPosition, sf::Vector2f initialSize);
     GuiElement(const GuiElement& other);
     GuiElement(Layout* pParent);
@@ -54,7 +54,7 @@ public:
     virtual ~GuiElement();
 
     /// @brief override this function in derived classes, but call it in the first line of that function
-    virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
+    virtual void update(sf::RenderWindow& window, sf::Event& event);
 
     /// override this function to implement view of element
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0 ;
@@ -86,6 +86,7 @@ public:
 
 protected:
     bool getIsVisible() const;
+    void refresh();
 
 protected:
     sf::RectangleShape m_rectangle; 

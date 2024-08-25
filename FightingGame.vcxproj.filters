@@ -51,6 +51,9 @@
     <ClInclude Include="GalGui\include\GalGui\LineEdit.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GalGui\include\GalGui\TextBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GalGui\src\TextButton.cpp">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GalGui\src\LineEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GalGui\src\TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
