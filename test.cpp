@@ -69,12 +69,18 @@ public:
         setLayout(&vLayout);
         box.setFont(&font);
         box.setCharacterSize(36);
-        box.setTextColor(sf::Color::White);
+        box.setAllTextColor(sf::Color::White);
         lineEdit.setFont(&font);
         lineEdit.linkToEntered([this](){
             box.appendText(lineEdit.getContent());
             lineEdit.clear();
         });
+
+        box.appendText("1", sf::Color::Red);
+        box.appendText("2", sf::Color::Yellow);
+        box.appendText("3", sf::Color::Green);
+        box.appendText("4", sf::Color::Blue);
+            
 
     }
 
@@ -99,7 +105,7 @@ int main()
     pane.setGlobalPosition({50,300});
 
 
-    pane.hide();
+
 
     while(window.isOpen())
     {

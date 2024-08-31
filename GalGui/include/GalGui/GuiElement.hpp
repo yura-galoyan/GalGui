@@ -84,8 +84,9 @@ public:
     void setType(ElementType type);
     ElementType getType() const;
 
-protected:
     bool getIsVisible() const;
+    
+protected:
     void refresh();
 
 protected:

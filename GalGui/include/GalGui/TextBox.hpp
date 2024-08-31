@@ -26,13 +26,13 @@ public:
 
     Alignment getAlignment() const;
 
-    void appendText(std::string mNewText);
+    void appendText(std::string mNewText, sf::Color = sf::Color{104,104,104});
 
     virtual void setGlobalPosition( sf::Vector2f n_pos) override;
 
     void setFont(sf::Font* font);
     void setText(const std::string& string);
-    void setTextColor(sf::Color);
+    void setAllTextColor(sf::Color);
     void setCharacterSize(unsigned h);
     void setOutlineColor(sf::Color newColor);
     

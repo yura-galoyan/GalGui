@@ -51,12 +51,11 @@ void TextBox::setOutlineColor(sf::Color newColor)
     m_rectangle.setOutlineColor(newColor);
 }
 
-void TextBox::appendText(std::string mNewText)
+void TextBox::appendText(std::string mNewText, sf::Color color)
 {
     mContentVector.push_back(mNewText);
-
-    setFont(mFont);
-    setTextColor(getTextColor());
+    mContentVector.back().setTextColor(color);
+    mContentVector.back().setFont(mFont);
     setCharacterSize(getCharacterSize());
     refresh();
 }
@@ -81,7 +80,7 @@ void TextBox::setFont(sf::Font *font)
     }
 }
 
-void TextBox::setTextColor(sf::Color color)
+void TextBox::setAllTextColor(sf::Color color)
 {
     mColor = color;
     for(auto& label : mContentVector)
