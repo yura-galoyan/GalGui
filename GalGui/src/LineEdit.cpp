@@ -21,8 +21,7 @@ LineEdit::LineEdit(const std::string& text, const sf::Font* font, sf::Vector2f n
 
 void LineEdit::clear()
 {
-    nexText.clear();
-    setText(nexText);
+    setText(std::string{});
 }
 
 void LineEdit::setInputMode(bool bEnabled)
@@ -32,8 +31,7 @@ void LineEdit::setInputMode(bool bEnabled)
     {
         m_sBackupText = getText();
         setOutlineColor(sf::Color::Yellow);
-        nexText.clear();
-        setText("|");
+        setText(std::string{});
     }
     else
     {
@@ -50,13 +48,14 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
     {
         if(event.type == sf::Event::TextEntered)
         {
+            auto nextText = getText();
             switch (event.text.unicode)
             {
             case '\b':
                 {
                     // delete last character
-                    if(nexText.size())
-                        nexText.pop_back();
+                    if(nextText.size())
+                        nextText.pop_back();
                 }
                 break;
             case '\n':
@@ -72,11 +71,11 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
             default:
                 {
                     // insert character
-                    nexText.append(sf::String(event.text.unicode).toAnsiString());
+                    nextText.append(sf::String(event.text.unicode).toAnsiString());
                 }
                 break;
             }
-            setText(nexText);
+            setText(nextText);
             onTextChanged();
         }
         if(event.type == sf::Event::KeyPressed)
@@ -103,7 +102,7 @@ void LineEdit::setInitialSize(sf::Vector2f n_size)
     
 std::string LineEdit::getContent() const
 {
-    return nexText;
+    return getText();
 }
 
 void LineEdit::linkToChanged(CallBack_t cb)

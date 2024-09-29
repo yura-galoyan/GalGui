@@ -65,7 +65,7 @@ sf::Vector2f VerticalLayout::getInitialSize() const
         return l->getInitialSize().x < r->getInitialSize().x;
     });
 
-    float sizeX = (*maxXelement)->getInitialSize().y;
+    float sizeX = (*maxXelement)->getInitialSize().x;
 
     return sf::Vector2f{sizeX, sizeY};
 }

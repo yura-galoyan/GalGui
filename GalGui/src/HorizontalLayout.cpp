@@ -18,9 +18,11 @@ void HorizontalLayout::addChild(GuiElement *pGuiElement)
     auto last = mGuiElements.back();
     mGuiElements.push_back(pGuiElement);
     pGuiElement->setParent(this);
+    const auto lastGlobalPosition = last->getGlobalPosition();
+    const auto lastInitialSize = last->getInitialSize();
     pGuiElement->setGlobalPosition({
-            last->getGlobalPosition().x + last->getInitialSize().x  + getSpacing(),
-            last->getGlobalPosition().y
+            lastGlobalPosition.x + lastInitialSize.x  + getSpacing(),
+            lastGlobalPosition.y
         });    
 
     if(!getParent())

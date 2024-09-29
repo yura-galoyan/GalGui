@@ -10,6 +10,7 @@
 #include <GalGui/Slider.hpp>
 #include <GalGui/LineEdit.hpp>
 #include <GalGui/TextBox.hpp>
+#include <GalGui/Dialog.hpp>
 
 #include <GalGui/HorizontalLayout.hpp>
 #include <GalGui/VerticalLayout.hpp>
@@ -95,17 +96,19 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode{1600,900},"button test");
     sf::Event event;
-    window.setKeyRepeatEnabled(true);
 
+    sf::Font f;
+    f.loadFromFile("fonts/menu_font.ttf");
 
+    GG::Dialog dialog({10,10},{500,200});
 
-
-    CommandPane pane;
-
-    pane.setGlobalPosition({50,300});
-
-
-
+    dialog.setFont(&f);
+    dialog.setText(" The font argument refers to a font that must"
+        "exist as long as the text uses it. Indeed, the text"
+        "doesn't store its own copy of the font, but rather keeps"
+        "a pointer to the one that you passed to this function."
+        "If the font is destroyed and the text tries to"
+        "use it, the behavior is undefined.");
 
     while(window.isOpen())
     {
@@ -115,25 +118,12 @@ int main()
             {
                 window.close();
             }
-            if(event.type == sf::Event::KeyPressed)
-            {
-                if(event.key.code == sf::Keyboard::Tilde)
-                {
-                    pane.show();
-                }
-                if(event.key.code == sf::Keyboard::Escape)
-                {
-                    pane.hide();
-                }
-            }
-
-            pane.update(window, event);
         }
 
 
         window.clear();
         
-        window.draw(pane);
+        window.draw(dialog);
 
         window.display();
     }

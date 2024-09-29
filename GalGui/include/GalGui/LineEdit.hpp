@@ -30,7 +30,6 @@ private:
 private:
     bool bInputMode{false};
     std::string m_sBackupText;
-    std::string nexText;
     CallBackVector mCallBacksTextChanged;
     CallBackVector mCallBacksTextEntered;
 };
