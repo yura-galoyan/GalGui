@@ -100,15 +100,15 @@ int main()
     sf::Font f;
     f.loadFromFile("fonts/menu_font.ttf");
 
-    GG::Dialog dialog({10,10},{500,200});
+    GG::Dialog dialog({10,10},{550,200});
 
     dialog.setFont(&f);
-    dialog.setText(" The font argument refers to a font that must"
-        "exist as long as the text uses it. Indeed, the text"
-        "doesn't store its own copy of the font, but rather keeps"
-        "a pointer to the one that you passed to this function."
-        "If the font is destroyed and the text tries to"
-        "use it, the behavior is undefined.");
+    dialog.setText(" The font argument    refers to a font that must "
+        "exist as long as the text uses it. Indeed, the text "
+        "doesn't store its own copy of the font, but rather keeps "
+        "a pointer to the one that you passed to this function. "
+        "If the font is destroyed and the text tries to "
+        "use it, the behavior is undefined. ");
 
     while(window.isOpen())
     {

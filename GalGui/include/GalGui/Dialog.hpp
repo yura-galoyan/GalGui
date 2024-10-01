@@ -69,7 +69,7 @@ private:
     Alignment mAlignment;
     Margins mMargins;
     bool m_bShowOutline{true};
-
+    bool m_bWordWrap{false};
 };
 
 }

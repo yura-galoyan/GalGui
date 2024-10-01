@@ -34,6 +34,7 @@ void Dialog::setGlobalPosition( sf::Vector2f n_pos)
     GuiElement::setGlobalPosition(n_pos);
 
     mText.setPosition(n_pos);
+    mText.move({mMargins.left, mMargins.top});
 }
 
 void Dialog::setOutlineColor(sf::Color newColor)
@@ -86,27 +87,59 @@ void Dialog::clear()
 
 void Dialog::setText(const std::string& string)
 {
+    if(!m_bWordWrap)
+    {
+        mText.setString(string);
+        return;
+    }
+
     std::string newText;
 
     mRawString = string;
 
     sf::Text tmpText;
+    tmpText.setPosition(getGlobalPosition());
     tmpText.setFont(*getFont());
     tmpText.setCharacterSize(getCharacterSize());
     
     int startIndex = 0;
+    int lastSpaceIndex = 0;
     for(int i = startIndex; i < string.size(); ++i)
     {
-        const std::string tmpStr = string.substr(startIndex,i - startIndex);
+        if(string[i] == ' ')
+        {
+            lastSpaceIndex = i;
+        } 
+        std::string tmpStr = string.substr(startIndex,i - startIndex);
         tmpText.setString(tmpStr);
         auto lastCharPos = tmpText.findCharacterPos(i);
         if(lastCharPos.x + getCharacterSize() >= m_rectangle.getPosition().x + m_rectangle.getSize().x)
         {
+            if(i + 1 != string.size())
+            {
+                if(string[i + 1] != ' ' && string[i + 1] != '\t')
+                {
+                    tmpStr = string.substr(startIndex, lastSpaceIndex - startIndex);
+                    i = lastSpaceIndex ;
+                    startIndex = i;
+                    newText.append(tmpStr + '\n');
+                    continue;
+                }
+            }
+            else 
+            {
+                newText.append(tmpStr);    
+            }
+            if(tmpStr.size())    
             newText.append(tmpStr + '\n');
             startIndex = i;
         }
+        else if (i + 1 == string.size())
+        {
+            newText.append(tmpStr);
+            break;
+        }
     }
-    mText.move(mMargins.left, mMargins.top);
     mText.setString(newText);
 }
 
