@@ -1,130 +1,98 @@
+#include <SFML/Graphics.hpp>
 
-// define this for iostream usage
-#define CUSTOM_DEBUG
+#include <SFML/Window/Keyboard.hpp>
 
-#include <GalGui/Button.hpp>
-#include <GalGui/ComboBox.hpp>
-#include <GalGui/CheckBox.hpp>
-#include <GalGui/TextButton.hpp>
-#include <GalGui/Label.hpp>
-#include <GalGui/Slider.hpp>
-#include <GalGui/LineEdit.hpp>
-#include <GalGui/TextBox.hpp>
-#include <GalGui/Dialog.hpp>
+#include <utility>
 
-#include <GalGui/HorizontalLayout.hpp>
-#include <GalGui/VerticalLayout.hpp>
-#include <GalGui/Frame.hpp>
+#include <iostream>
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-
-
-#include <iomanip>
-
-namespace GG = GalGui::Widget;
-
-class myWidget : public GalGui::Widget::Frame
+struct LightVectors
 {
-public:
-    myWidget()
-    {
-        draw.setOutlineColor(sf::Color::Red);
-        draw.setOutLineThickness(1);
-
-        erase.setOutlineColor(sf::Color::Yellow);
-        erase.setOutLineThickness(1);
-
-        pick.setOutlineColor(sf::Color::Blue);
-        pick.setOutLineThickness(1);
-        
-
-        setLayout(&hl);
-
-        hl.setSpacing(10);
-        hl.addChild(&draw);
-        hl.addChild(&erase);
-        hl.addChild(&pick);
-    }
-
-
-private:
-    GalGui::Widget::HorizontalLayout hl;
-    GalGui::Widget::TextButton draw;
-    GalGui::Widget::TextButton erase;
-    GalGui::Widget::TextButton pick;
-};
-
-class CommandPane : public GG::Frame
-{
-public:
-    CommandPane(GG::Layout* parent = nullptr)
-        : GG::Frame( parent )
-    {
-        
-        font.loadFromFile("fonts/menu_font.ttf");
-        vLayout.addChild(&box);
-        vLayout.addChild(&lineEdit);
-        vLayout.setSpacing(20);
-
-        setLayout(&vLayout);
-        box.setFont(&font);
-        box.setCharacterSize(36);
-        box.setAllTextColor(sf::Color::White);
-        lineEdit.setFont(&font);
-        lineEdit.linkToEntered([this](){
-            box.appendText(lineEdit.getContent());
-            lineEdit.clear();
-        });
-
-        box.appendText("1", sf::Color::Red);
-        box.appendText("2", sf::Color::Yellow);
-        box.appendText("3", sf::Color::Green);
-        box.appendText("4", sf::Color::Blue);
-            
-
-    }
-
-private:
-    sf::Font font;
-    GG::LineEdit lineEdit;
-    GG::VerticalLayout vLayout;
-    GG::TextBox box;
+    std::vector<sf::Vector2f> positions;
+    std::vector<float> rads;
+    std::vector<sf::Glsl::Vec3> colors;
 };
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode{1600,900},"button test");
-    sf::Event event;
+    // Create a window
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Lighting");
+    sf::View view = window.getDefaultView();
+    // Load a texture and create a sprite
+    sf::Texture texture;
+    if (!texture.loadFromFile("npc1idle.png"))
+        return -1;
 
-    sf::Font f;
-    f.loadFromFile("fonts/menu_font.ttf");
+    sf::Sprite sprite(texture);
+    sprite.setPosition(0,0);
 
-    GG::Dialog dialog({10,10},{550,200});
+    // Load the shader
+    sf::Shader shader;
+    if (!shader.loadFromFile("light.frag", sf::Shader::Fragment))
+        return -1;
 
-    dialog.setFont(&f);
-    dialog.setText(" The font argument    refers to a font that must "
-        "exist as long as the text uses it. Indeed, the text "
-        "doesn't store its own copy of the font, but rather keeps "
-        "a pointer to the one that you passed to this function. "
-        "If the font is destroyed and the text tries to "
-        "use it, the behavior is undefined. ");
+    // Set initial light properties
+    sf::Vector2f lightPosition(400, 300);  // Light at the center of the screen
+    float lightRadius = 200.0f;
+    sf::Color lightColor(255, 255, 255);  // White light
 
-    while(window.isOpen())
+    bool light{true};
+
+    LightVectors lightVector;
+
+    lightVector.colors.push_back({ 1.0f, 1.0f, 1.0f });
+    lightVector.positions.push_back(sf::Vector2f(0.f,0.f));
+    lightVector.rads.push_back(200.f);
+
+
+    while (window.isOpen())
     {
-        while(window.pollEvent(event))
+        sf::Event event;
+        while (window.pollEvent(event))
         {
-            if(event.type == sf::Event::Closed)
-            {
+
+            if (event.type == sf::Event::Closed)
                 window.close();
+            if(event.type == sf::Event::KeyPressed)
+                if(event.key.code == sf::Keyboard::Key::H)
+                    light = !light;
+            if(event.type == sf::Event::MouseButtonPressed)
+            {
+                std::cout << "added color" << std::endl;
+                lightVector.colors.push_back({1.0f, 1.0f, 1.0f});
+                auto pos = sf::Vector2f(sf::Mouse::getPosition(window));
+                pos.y = 600 - pos.y;
+                lightVector.positions.push_back(pos);
+                lightVector.rads.push_back(400.f);
             }
         }
 
-
-        window.clear();
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+            view.move(-1,0);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+            view.move(0,-1);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+            view.move(0,1);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+            view.move(1,0);
         
-        window.draw(dialog);
+        // Set shader uniforms
+        shader.setUniformArray("lightPositions",std::as_const(lightVector.positions).data(),lightVector.colors.size());
+        shader.setUniformArray("lightRadii", std::as_const(lightVector.rads).data(),lightVector.colors.size());
+        shader.setUniformArray("lightColors", std::as_const(lightVector.colors).data(),lightVector.colors.size());
+        shader.setUniform("lightCount", static_cast<int>(lightVector.colors.size()));
 
+        // Clear the window
+        window.clear();
+        window.setView(view);
+        if(light)
+            window.draw(sprite, &shader);
+        else
+            window.draw(sprite);
+
+        // Display the window
         window.display();
     }
+
+    return 0;
 }
