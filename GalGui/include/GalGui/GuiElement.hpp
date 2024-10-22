@@ -28,8 +28,6 @@ enum class ElementType
     Label, VerticalLayout, TextButton, Slider, Frame
 };
 
-inline namespace Detail{
-
 // base class for all gui elements
 class GuiElement : public sf::Drawable
 {
@@ -108,6 +106,5 @@ private:
 
 }
 
-}
 
 #endif //GALGUI_GUIELEMENT_HPP

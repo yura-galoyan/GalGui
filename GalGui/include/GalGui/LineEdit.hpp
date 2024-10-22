@@ -89,7 +89,7 @@ private:
 // };
 
 // LineEdit::LineEdit(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
-//     : Detail::GuiElement{n_GlobalPosition, n_InitialSize}
+//     : GuiElement{n_GlobalPosition, n_InitialSize}
 // {
 //     m_rectangle.setOutlineColor(sf::Color{104,104,104 });
 //     m_LineEditState = State::Idle;

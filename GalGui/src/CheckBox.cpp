@@ -8,7 +8,7 @@ namespace GalGui {
 namespace Widget {
 
 CheckBox::CheckBox(sf::Vector2f n_GlobalPosition, sf::Vector2f n_InitialSize)
-    : Detail::GuiElement{n_GlobalPosition, n_InitialSize}
+    : GuiElement{n_GlobalPosition, n_InitialSize}
 {
     m_CheckBoxState = State::Unchecked;
     m_rectangle.setFillColor(sf::Color{170,170,170});

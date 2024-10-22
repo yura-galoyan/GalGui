@@ -50,11 +50,11 @@ GuiElement::GuiElement(const GuiElement &other)
     
 }
 
-Detail::GuiElement::GuiElement(Layout *pParent)
+GuiElement::GuiElement(Layout *pParent)
     : mParent{pParent}
 { }
 
-Detail::GuiElement::~GuiElement()
+GuiElement::~GuiElement()
 {
     if(m_bDeleteLabel)
     {
@@ -186,7 +186,7 @@ bool GuiElement::getIsVisible() const
     return m_bIsVisible;
 }
 
-void Detail::GuiElement::refresh()
+void GuiElement::refresh()
 {
     setGlobalPosition(getGlobalPosition());
 }

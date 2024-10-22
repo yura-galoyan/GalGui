@@ -17,7 +17,7 @@ namespace GalGui {
 namespace Widget {
 
 // Standart CheckBox
-class CheckBox : public Detail::GuiElement
+class CheckBox : public GuiElement
 {
 public:
     using CallBack_t = std::function<void(bool)>;
