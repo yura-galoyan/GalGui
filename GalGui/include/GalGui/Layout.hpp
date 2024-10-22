@@ -57,6 +57,8 @@ public:
     virtual void configureElemets() = 0;
 
 protected:
+    bool containsElement(GuiElement* pGuiELement) const;
+
     std::list<GuiElement*> mGuiElements;
 
 private:

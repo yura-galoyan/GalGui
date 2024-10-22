@@ -16,7 +16,6 @@ LineEdit::LineEdit(const std::string& text, const sf::Font* font, sf::Vector2f n
 
     setAutoAdjustSize(true);
     setAlignment(Alignment::Left);
-
 }
 
 void LineEdit::clear()
@@ -30,12 +29,12 @@ void LineEdit::setInputMode(bool bEnabled)
     if(bInputMode)
     {
         m_sBackupText = getText();
-        setOutlineColor(sf::Color::Yellow);
+        // setOutlineColor(sf::Color::Yellow);
         setText(std::string{});
     }
     else
     {
-        setOutlineColor(sf::Color{104,104,104});
+        // setOutlineColor(sf::Color{104,104,104});
     }
 }
 
@@ -89,9 +88,21 @@ void LineEdit::update(sf::RenderWindow& window, sf::Event& event)
             {
                 onTextEntered();
             }
+            if(event.key.control)
+            {
+                if(event.key.code == sf::Keyboard::A)
+                {
+                    selectText();
+                }
+            }
         }
 
     }
+}
+
+void LineEdit::selectText()
+{
+
 }
 
 void LineEdit::setInitialSize(sf::Vector2f n_size)

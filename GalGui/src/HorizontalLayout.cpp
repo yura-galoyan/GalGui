@@ -9,6 +9,7 @@ namespace Widget{
 
 void HorizontalLayout::addChild(GuiElement *pGuiElement)
 {
+    if(containsElement(pGuiElement)) return;
     if(mGuiElements.empty())
     {
         mGuiElements.push_back(pGuiElement);

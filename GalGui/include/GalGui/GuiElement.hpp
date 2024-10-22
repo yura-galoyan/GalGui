@@ -86,7 +86,8 @@ public:
     
 protected:
     void refresh();
-
+    virtual void enterEvent() { std::cout << "default implemetation" << std::endl; };
+    virtual void leaveEvent() { std::cout << "default implemetation" << std::endl; };
 protected:
     sf::RectangleShape m_rectangle; 
     Label* m_pLabel{ nullptr };
@@ -95,6 +96,7 @@ protected:
 private:
     bool m_bIsVisible{true};
     bool m_bDeleteLabel{false};
+    bool m_bMouseFirstIn{true};
     inline static bool m_bIsEnabled{false};
 
     std::string mElementName;

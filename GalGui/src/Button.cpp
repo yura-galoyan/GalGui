@@ -46,7 +46,6 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Button::checkState(sf::RenderWindow& window, sf::Event& event)
 {
-    
     auto pos = getGlobalPosition();
     auto size = getInitialSize();
 

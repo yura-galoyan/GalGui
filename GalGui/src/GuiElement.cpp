@@ -66,6 +66,37 @@ void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
 {
     if(!getIsVisible()) return;
 
+    if(event.type == sf::Event::MouseMoved)
+    {
+        auto pos = getGlobalPosition();
+        auto size = getInitialSize();
+
+        auto startMousePos = sf::Mouse::getPosition(window);
+        auto mousePos = window.mapPixelToCoords(startMousePos);
+
+        auto isOnButton = [=]() -> bool {
+            return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
+                mousePos.y > pos.y && mousePos.y < pos.y + size.y;
+        };
+
+        if(isOnButton())
+        {
+            if(m_bMouseFirstIn)
+            {
+                enterEvent();
+                m_bMouseFirstIn = false;
+            }
+        }
+        else
+        {
+            if(!m_bMouseFirstIn)
+            {
+                leaveEvent();
+                m_bMouseFirstIn = true;
+            }
+        }
+    }
+
     if(event.type == sf::Event::Resized)
     {
         if(!m_bIsEnabled)

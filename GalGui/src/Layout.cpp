@@ -1,5 +1,3 @@
-#pragma once
-
 #include <algorithm>
 
 #include <Galgui/Layout.hpp>
@@ -83,6 +81,10 @@ GuiElement* Layout::getRightestElement() const
     return *rightestElement;
 }
 
+bool Layout::containsElement(GuiElement *pGuiELement) const
+{
+    return std::find(mGuiElements.begin(), mGuiElements.end(), pGuiELement) != mGuiElements.end();
+}
 void Layout::setSpacing(float spacing)
 {
     mSpacing = spacing;

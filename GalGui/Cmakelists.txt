@@ -14,11 +14,21 @@ set(SOURCES
 src/Button.cpp
 src/CheckBox.cpp
 src/ComboBox.cpp 
-src/GuiElement.cpp 
+src/Dialog.cpp
+src/Frame.cpp
+src/Gui.cpp
+src/GuiElement.cpp
+src/HorizontalLayout.cpp
+src/VerticalLayout.cpp 
 src/Label.cpp 
+src/Layout.cpp
+src/LineEdit.cpp
+src/Slider.cpp
+src/TextBox.cpp
 src/TextButton.cpp
+../test.cpp
 )
 
-add_library(GalGui ${SOURCES})
+add_executable(GalGui ${SOURCES})
 
 target_link_libraries(GalGui sfml-window sfml-graphics sfml-system)

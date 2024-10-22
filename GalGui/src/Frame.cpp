@@ -1,5 +1,3 @@
-#pragma once
-
 #include <GalGui/Frame.hpp>
 #include <Galgui/Layout.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

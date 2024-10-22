@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <GalGui/Core/Private/DefaultFontData.hpp>
+
 namespace GalGui
 {
 
@@ -22,7 +23,7 @@ void Gui::cleanup()
 {
     for(auto* pGuiElement : mGuiElements)
     {
-       // delete pGuiElement;
+       delete pGuiElement;
     }
 }
 
@@ -41,7 +42,6 @@ void Gui::draw(sf::RenderTarget& target, const sf::RenderStates states) const
         }
     }
 }
-
 
 void Gui::handleEvents(sf::RenderWindow& window, sf::Event event)
 {

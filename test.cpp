@@ -3,7 +3,10 @@
 
 #include <GalGui/Label.hpp>
 
+#include <GalGui/VerticalLayout.hpp>
+
 #include <GalGui/Gui.hpp>
+#include <GalGui/LineEdit.hpp>
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -25,13 +28,11 @@ int main()
 
     sf::Event event;
 
-    auto lbl = DBG_NEW GalGui::Widget::Label;
+    GalGui::Widget::LineEdit* l = new GalGui::Widget::LineEdit;
 
-    lbl->setText("Hello world");
-    lbl->setFont(gui.getDefaultFont());
+    l->setFont(gui.getDefaultFont());
 
-
-    gui.add(lbl);
+    gui.add(l);
 
     while(window.isOpen())
     {
@@ -59,12 +60,6 @@ int main()
 
     }
 
-    int* a = DBG_NEW  int;
-
-    delete a;
-
-    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-    _CrtDumpMemoryLeaks();
 }
 
 

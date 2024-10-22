@@ -1,5 +1,4 @@
 #include <GalGui/VerticalLayout.hpp>
-
 #include <numeric>
 
 namespace GalGui {
@@ -8,6 +7,12 @@ namespace Widget{
 
 void VerticalLayout::addChild(GuiElement *pGuiElement)
 {
+    if(containsElement(pGuiElement))
+    {
+        std::cout << "duplicate value" << std::endl;
+        return;
+    }
+
     if(mGuiElements.empty())
     {
         mGuiElements.push_back(pGuiElement);
