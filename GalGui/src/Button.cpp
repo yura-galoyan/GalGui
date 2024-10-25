@@ -41,7 +41,26 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if(!getIsVisible()) return;
     
     GuiElement::draw(target, states);
-    target.draw(m_rectangle);
+    target.draw(m_rectangle, states);
+    if(m_pSprite) target.draw(*m_pSprite, states);
+}
+
+void Button::setIcon(const sf::Sprite& iconSprite)
+{
+    m_pSprite = new sf::Sprite(iconSprite);
+    refreshIcon();
+}
+
+void Button::refreshIcon()
+{
+    const float relY = (getInitialSize().y - 4) / m_pSprite->getLocalBounds().height;
+
+    m_pSprite->setScale(relY, relY);
+
+    m_pSprite->setPosition(
+        getGlobalPosition().x + getInitialSize().x / 2 - m_pSprite->getGlobalBounds().width /2,
+        getGlobalPosition().y + (getInitialSize().y - m_pSprite->getGlobalBounds().height) / 2
+    );
 }
 
 void Button::checkState(sf::RenderWindow& window, sf::Event& event)
@@ -127,6 +146,28 @@ void Button::checkState(sf::RenderWindow& window, sf::Event& event)
         }
     }
 }
+
+void Button::setGlobalPosition( sf::Vector2f n_pos)
+{
+    GuiElement::setGlobalPosition(n_pos);
+
+    if(m_pSprite)
+    {
+        refreshIcon();
+    }
+
+}
+
+void Button::setInitialSize( sf::Vector2f n_size)
+{
+    GuiElement::setInitialSize(n_size);
+
+    if(m_pSprite)
+    {
+        refreshIcon();
+    }
+}
+
 
 Button::State Button::getState() const
 {

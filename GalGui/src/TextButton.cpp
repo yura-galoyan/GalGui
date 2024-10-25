@@ -79,7 +79,7 @@ void TextButton::setGlobalPosition(sf::Vector2f n_pos)
 {
     GuiElement::setGlobalPosition(n_pos);
     if(m_bAutoAdjustEnabled)
-        setInitialSize(getInitialSize());
+        adjustText(getInitialSize());
 }
 
 void TextButton::setInitialSize(sf::Vector2f n_size)
@@ -87,33 +87,38 @@ void TextButton::setInitialSize(sf::Vector2f n_size)
     if(m_bAutoAdjustEnabled)
     {
         Button::setInitialSize(n_size);
-        setCharacterSize( n_size.y < n_size.x ? n_size.y / 2 : n_size.x / 5  );
-        switch (mAlignment)
-        {
-        case Alignment::Middle:
-            {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 5  }  );
-            }
-            break;
-        
-        case Alignment::Left:
-            {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ 1  , n_size.y / 5  }  );
-            }
-            break;
-            
-        case Alignment::Right:
-            {
-                m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)  , n_size.y / 5  }  );
-            }
-            break;
-        default:
-            break;
-        }
+        adjustText(n_size);
     }
     else
     {
         Button::setInitialSize(n_size);
+    }
+}
+
+void TextButton::adjustText(sf::Vector2f n_size)
+{
+    setCharacterSize( n_size.y < n_size.x ? n_size.y / 2 : n_size.x / 5  );
+    switch (mAlignment)
+    {
+    case Alignment::Middle:
+        {
+            m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)/2  , n_size.y / 5  }  );
+        }
+        break;
+    
+    case Alignment::Left:
+        {
+            m_text.setPosition( getGlobalPosition() + sf::Vector2f{ 1  , n_size.y / 5  }  );
+        }
+        break;
+        
+    case Alignment::Right:
+        {
+            m_text.setPosition( getGlobalPosition() + sf::Vector2f{ (n_size.x - m_text.getGlobalBounds().width)  , n_size.y / 5  }  );
+        }
+        break;
+    default:
+        break;
     }
 }
 

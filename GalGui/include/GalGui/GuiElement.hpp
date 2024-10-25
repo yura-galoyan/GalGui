@@ -4,6 +4,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 
 #include <memory>
 #include <iostream>
@@ -26,7 +27,7 @@ class Layout;
 enum class ElementType
 {
     Button, CheckBox, GuiElement, HorizontalLayout, ComboBox,
-    Label, VerticalLayout, TextButton, Slider, Frame
+    Label, VerticalLayout, TextButton, Slider, Frame, Menu, EditLine, TextBox
 };
 
 // base class for all gui elements

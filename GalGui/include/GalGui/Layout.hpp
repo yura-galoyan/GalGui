@@ -18,7 +18,7 @@ class Layout : public GuiElement
 public:
     Layout(Layout* pParent = nullptr);
 
-    virtual ~Layout(){ };
+    virtual ~Layout();
 
     /// @brief add element to layout
     virtual void addChild(GuiElement* pGuiElement) = 0;

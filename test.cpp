@@ -4,9 +4,44 @@
 #include <GalGui/Label.hpp>
 
 #include <GalGui/VerticalLayout.hpp>
+#include <GalGui/MainWindow.hpp>
+#include <GalGui/ComboBox.hpp>
+#include <GalGui/Menu.hpp>
 
 #include <GalGui/Gui.hpp>
 #include <GalGui/EditLine.hpp>
+#include <GalGui/Button.hpp>
+
+#include <thread>
+#include <atomic>
+
+#include <windows.h>
+#include <commdlg.h>
+#include <iostream>
+
+std::atomic<bool> inFocus{true};
+std::atomic<bool> t1Going{false};
+
+void openFile()
+{
+    OPENFILENAMEA ofn;
+    char szFile[260] = { 0 };
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;  // Use NULL if no owner window
+    ofn.lpstrFile = szFile;
+    ofn.nMaxFile = sizeof(szFile);
+    ofn.lpstrFilter = "Text Files\0*.TXT\0All Files\0*.*\0";
+    ofn.lpstrTitle = "Open File";
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+    if (GetOpenFileNameA(&ofn)) {
+        std::cout << "Selected file: " << ofn.lpstrFile << std::endl;
+    } else {
+        std::cout << "Dialog canceled or error occurred." << std::endl;
+    }
+}
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -28,28 +63,32 @@ int main()
 
     sf::Event event;
 
-    GalGui::Widget::EditLine* l1 = new GalGui::Widget::EditLine;
-    GalGui::Widget::EditLine* l2 = new GalGui::Widget::EditLine;
+    GalGui::Widget::Menu* menu = new GalGui::Widget::Menu;
+    menu->setGlobalPosition(sf::Vector2f(0,0));
+    menu->setInitialSize(sf::Vector2f(60,20));
+    menu->setFont(gui.getDefaultFont());
+    menu->setTitle("File");
+    menu->append("Open");
+    menu->append("Second");
+    menu->append("Third");
+    menu->getActionByName("Open").linkToClicked([](){ 
+            openFile();
+        });
 
-    l1->setFont(*gui.getDefaultFont());
-    l1->linkToChanged([l1](){
-        std::cout << l1->getText() << std::endl;
-    });
+    GalGui::Widget::Menu* menu1 = new GalGui::Widget::Menu;
+    menu1->setGlobalPosition(sf::Vector2f(0,0));
+    menu1->setInitialSize(sf::Vector2f(60,20));
+    menu1->setFont(gui.getDefaultFont());
+    menu1->setTitle("Info");
+    menu1->append("Open");
+    menu1->append("Second");
+    menu1->append("Third");
 
-    l2->setGlobalPosition(sf::Vector2f(10,250));
-    l2->setFont(*gui.getDefaultFont());
-    l2->linkToChanged([l2](){
-        std::cout << l2->getText() << std::endl;
-    });
+    GalGui::Widget::MainWindow* mw = new GalGui::Widget::MainWindow;
 
-
-
-    GalGui::Widget::VerticalLayout* vl = new GalGui::Widget::VerticalLayout;
-    vl->addChild(l1);
-    vl->addChild(l2);
-
-    gui.add(vl);
-
+    mw->addMenu(menu);
+    mw->addMenu(menu1);
+    gui.add(mw);
 
     while(window.isOpen())
     {
@@ -59,21 +98,16 @@ int main()
                 window.close();
 
             gui.handleEvents(window, event);
+            
         }
 
-
         window.clear();
-
 
         window.draw(gui);
 
         window.display();
-
-
-
-
-
     }
+
 
 }
 

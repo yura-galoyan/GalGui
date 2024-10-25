@@ -1,9 +1,9 @@
 #include <GalGui/Gui.hpp>
-
 #include <GalGui/GuiElement.hpp>
+#include <GalGui/Core/Private/DefaultFontData.hpp>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Font.hpp>
-#include <GalGui/Core/Private/DefaultFontData.hpp>
 
 namespace GalGui
 {

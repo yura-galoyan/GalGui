@@ -1,5 +1,4 @@
-#ifndef GALGUI_TEXT_BUTTON_HPP
-#define GALGUI_TEXT_BUTTON_HPP
+#pragma once
 
 #include "Button.hpp"
 
@@ -46,7 +45,10 @@ public:
     virtual void setInitialSize(sf::Vector2f n_size) override;
 
 private:
-    mutable sf::Text m_text;
+    void adjustText(sf::Vector2f n_size);
+
+private:
+    sf::Text m_text;
     const sf::Font* defFont;
     bool m_bAutoAdjustEnabled{true};
     Alignment mAlignment{Alignment::Middle};
@@ -56,6 +58,3 @@ private:
 }
 
 }
-
-
-#endif //GALGUI_TEXT_BUTTON_HPP

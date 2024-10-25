@@ -1,15 +1,23 @@
 #ifndef GALGUI_BUTTON_HPP
 #define GALGUI_BUTTON_HPP
 
-#include <string>
-#include <vector>
+#include "GuiElement.hpp"
 
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "GuiElement.hpp"
+
+#include <string>
+#include <vector>
+
 
 namespace GalGui {
+
+enum class IconPosition
+{
+    FromLeft, FromRight
+};
 
 namespace Widget {
 
@@ -49,6 +57,12 @@ public:
     void setOutLineThickness(float value);
     void setPressedOnce(bool enabled);
 
+    /// Transform modifiers
+    virtual void setGlobalPosition( sf::Vector2f n_pos);
+    virtual void setInitialSize( sf::Vector2f n_size);
+
+    void setIcon(const sf::Sprite& iconSprite);
+
     State getState() const;
     sf::Color getOutlineColor();
     sf::Color getIdleColor();
@@ -75,15 +89,18 @@ public:
 
 private:
     void checkState(sf::RenderWindow& window, sf::Event& event);
-
+    void refreshIcon();
+    
 private:
     std::string m_text;
-    sf::Color m_idleColor{sf::Color(255,255,255)};
+    sf::Sprite* m_pSprite{nullptr};
+    sf::Color m_idleColor{sf::Color(215,215,215)};
     sf::Color m_HoverColor{sf::Color(196,196,196)};
     sf::Color m_PressColor{sf::Color(128,128,128)};
     State m_ButtonState;
     bool m_bPressedOnce;
     bool m_bOnHold;
+
 private:
     CallBackVector m_clicked_callBacks;
     CallBackVector m_onHold_callBacks;

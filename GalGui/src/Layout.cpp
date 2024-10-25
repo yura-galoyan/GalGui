@@ -15,6 +15,16 @@ Layout::Layout(Layout* pParent)
 
 }
 
+Layout::~Layout()
+{
+    for(auto& elem : mGuiElements)
+    {
+        delete elem;
+    }
+    
+    mGuiElements.clear();
+}
+    
 void Layout::removeChild(GuiElement* pGuiElement)
 {
     mGuiElements.erase(std::remove(mGuiElements.begin(), mGuiElements.end(), pGuiElement));

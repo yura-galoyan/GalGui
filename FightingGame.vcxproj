@@ -30,7 +30,8 @@
     <ClInclude Include="GalGui\include\GalGui\HorizontalLayout.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Label.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Layout.hpp" />
-    <ClInclude Include="GalGui\include\GalGui\LineEdit.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\MainWindow.hpp" />
+    <ClInclude Include="GalGui\include\GalGui\Menu.hpp" />
     <ClInclude Include="GalGui\include\GalGui\Slider.hpp" />
     <ClInclude Include="GalGui\include\GalGui\TextBox.hpp" />
     <ClInclude Include="GalGui\include\GalGui\TextButton.hpp" />
@@ -50,7 +51,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\galoy\Desktop\Development\GalGui\GalGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="GalGui\src\Layout.cpp" />
-    <ClCompile Include="GalGui\src\LineEdit.cpp" />
+    <ClCompile Include="GalGui\src\MainWindow.cpp" />
+    <ClCompile Include="GalGui\src\Menu.cpp" />
     <ClCompile Include="GalGui\src\Slider.cpp" />
     <ClCompile Include="GalGui\src\TextBox.cpp" />
     <ClCompile Include="GalGui\src\TextButton.cpp" />

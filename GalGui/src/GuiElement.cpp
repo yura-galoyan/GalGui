@@ -27,6 +27,7 @@ GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
 }
 
 GuiElement::GuiElement()
+    : GuiElement(sf::Vector2f(2,2), sf::Vector2f(50,20))
 {
     m_rectangle.setFillColor(sf::Color::Transparent);
     m_rectangle.setOutlineColor(sf::Color::Green);

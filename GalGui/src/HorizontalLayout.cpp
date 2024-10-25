@@ -10,6 +10,7 @@ namespace Widget{
 void HorizontalLayout::addChild(GuiElement *pGuiElement)
 {
     if(containsElement(pGuiElement)) return;
+
     if(mGuiElements.empty())
     {
         mGuiElements.push_back(pGuiElement);
@@ -56,18 +57,15 @@ void HorizontalLayout::configureElemets()
     
 sf::Vector2f HorizontalLayout::getInitialSize() const
 {
-
-    float sizeX = std::accumulate(mGuiElements.begin(), mGuiElements.end(), 0, [](int l, auto& r){
+    const float sizeX = std::accumulate(mGuiElements.begin(), mGuiElements.end(), 0, [](int l, auto& r){
         return l + r->getInitialSize().x;
-    });
+    }) + ( mGuiElements.size() - 1 ) * getSpacing();
 
-    sizeX += ( mGuiElements.size() - 1 ) * getSpacing();
-    
-    auto maxYelement = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](auto& l, auto& r){
+    const auto maxYelement = std::max_element(mGuiElements.begin(), mGuiElements.end(), [](auto& l, auto& r){
         return l->getInitialSize().y < r->getInitialSize().y;
     });
 
-    float sizeY = (*maxYelement)->getInitialSize().y;
+    const float sizeY = (*maxYelement)->getInitialSize().y;
 
     return sf::Vector2f{sizeX, sizeY};
 }
