@@ -11,6 +11,13 @@ namespace GalGui {
 
 namespace Widget{
 
+sf::Cursor& GuiElement::getDefaultCursor()
+{
+    static sf::Cursor c;
+    c.loadFromSystem(sf::Cursor::Arrow);
+    return c;
+}
+
 GuiElement::GuiElement(sf::Vector2f n_Position, sf::Vector2f n_Size)
     : m_rectangle{ n_Size }, m_pLabel{nullptr}
 {
@@ -62,6 +69,18 @@ GuiElement::~GuiElement()
     }
 }
 
+bool GuiElement::isOnGuiElement(sf::RenderWindow& window)
+{
+    const auto& pos = getGlobalPosition();
+    const auto& size = getInitialSize();
+
+    const auto& startMousePos = sf::Mouse::getPosition(window);
+    const auto& mousePos = window.mapPixelToCoords(startMousePos);
+
+ return mousePos.x > pos.x && mousePos.x < pos.x + size.x &&
+               mousePos.y > pos.y && mousePos.y < pos.y + size.y;
+}
+
 void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
 {
     if(!getIsVisible()) return;
@@ -83,7 +102,7 @@ void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
         {
             if(m_bMouseFirstIn)
             {
-                enterEvent();
+                enterEvent(window);
                 m_bMouseFirstIn = false;
             }
         }
@@ -91,7 +110,7 @@ void GuiElement::update(sf::RenderWindow &window, sf::Event &event)
         {
             if(!m_bMouseFirstIn)
             {
-                leaveEvent();
+                leaveEvent(window);
                 m_bMouseFirstIn = true;
             }
         }

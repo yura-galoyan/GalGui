@@ -6,7 +6,7 @@
 #include <GalGui/VerticalLayout.hpp>
 
 #include <GalGui/Gui.hpp>
-#include <GalGui/LineEdit.hpp>
+#include <GalGui/EditLine.hpp>
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -28,16 +28,31 @@ int main()
 
     sf::Event event;
 
-    GalGui::Widget::LineEdit* l = new GalGui::Widget::LineEdit;
+    GalGui::Widget::EditLine* l1 = new GalGui::Widget::EditLine;
+    GalGui::Widget::EditLine* l2 = new GalGui::Widget::EditLine;
 
-    l->setFont(gui.getDefaultFont());
+    l1->setFont(*gui.getDefaultFont());
+    l1->linkToChanged([l1](){
+        std::cout << l1->getText() << std::endl;
+    });
 
-    gui.add(l);
+    l2->setGlobalPosition(sf::Vector2f(10,250));
+    l2->setFont(*gui.getDefaultFont());
+    l2->linkToChanged([l2](){
+        std::cout << l2->getText() << std::endl;
+    });
+
+
+
+    GalGui::Widget::VerticalLayout* vl = new GalGui::Widget::VerticalLayout;
+    vl->addChild(l1);
+    vl->addChild(l2);
+
+    gui.add(vl);
+
 
     while(window.isOpen())
     {
-
-
         while(window.pollEvent(event))
         {
             if(event.type == sf::Event::Closed)

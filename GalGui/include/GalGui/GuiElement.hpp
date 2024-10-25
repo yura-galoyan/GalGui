@@ -13,6 +13,7 @@ namespace sf
 {
     class RenderWindow;
     class RenderTarget;
+    class Cursor;
 }
 
 namespace GalGui {
@@ -68,6 +69,8 @@ public:
     /// By default stretch is disabled, if stretch is enabled elements may not work correctly
     static void setStretch(bool bEnabled);
 
+    static sf::Cursor& getDefaultCursor();
+
     /// show/hide
     void show();
     void hide();
@@ -85,9 +88,10 @@ public:
     bool getIsVisible() const;
     
 protected:
+    bool isOnGuiElement(sf::RenderWindow& window);
     void refresh();
-    virtual void enterEvent() { std::cout << "default implemetation" << std::endl; };
-    virtual void leaveEvent() { std::cout << "default implemetation" << std::endl; };
+    virtual void enterEvent(sf::RenderWindow&) {};
+    virtual void leaveEvent(sf::RenderWindow&) {};
 protected:
     sf::RectangleShape m_rectangle; 
     Label* m_pLabel{ nullptr };
