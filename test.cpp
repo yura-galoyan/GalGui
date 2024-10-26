@@ -11,49 +11,7 @@
 #include <GalGui/Gui.hpp>
 #include <GalGui/EditLine.hpp>
 #include <GalGui/Button.hpp>
-
-#include <thread>
-#include <atomic>
-
-#include <windows.h>
-#include <commdlg.h>
-#include <iostream>
-
-std::atomic<bool> inFocus{true};
-std::atomic<bool> t1Going{false};
-
-void openFile()
-{
-    OPENFILENAMEA ofn;
-    char szFile[260] = { 0 };
-
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = NULL;  // Use NULL if no owner window
-    ofn.lpstrFile = szFile;
-    ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = "Text Files\0*.TXT\0All Files\0*.*\0";
-    ofn.lpstrTitle = "Open File";
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-
-    if (GetOpenFileNameA(&ofn)) {
-        std::cout << "Selected file: " << ofn.lpstrFile << std::endl;
-    } else {
-        std::cout << "Dialog canceled or error occurred." << std::endl;
-    }
-}
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#ifdef _DEBUG
-    #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-    // Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
-    // allocations to be of _CLIENT_BLOCK type
-#else
-    #define DBG_NEW new
-#endif
+#include <GalGui/SystemDialog.hpp>
 
 int main()
 {
@@ -72,7 +30,7 @@ int main()
     menu->append("Second");
     menu->append("Third");
     menu->getActionByName("Open").linkToClicked([](){ 
-            openFile();
+            GalGui::SystemDialog::messageBox( L"Test name", L"Test description", GalGui::SystemDialog::InfoDialog );
         });
 
     GalGui::Widget::Menu* menu1 = new GalGui::Widget::Menu;
@@ -107,8 +65,6 @@ int main()
 
         window.display();
     }
-
-
 }
 
 
